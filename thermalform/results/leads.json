@@ -1,0 +1,62 @@
+[
+ {
+  "fluid": "PAO benchmark",
+  "chip_dT_vs_bench_C": 0.0,
+  "max_chip_W_at_70C": 1307,
+  "pump_kW_per_MW": 20.36,
+  "pump_usd_yr_vs_bench": 0,
+  "dk_central": 2.08,
+  "dk_worst": 2.08,
+  "flash_C_model": 198,
+  "biodegradable_frac": 0.0,
+  "trace_ohm_worst": 47.31
+ },
+ {
+  "fluid": "Lead A (all-round)",
+  "chip_dT_vs_bench_C": -0.401,
+  "max_chip_W_at_70C": 1330,
+  "pump_kW_per_MW": 18.17,
+  "pump_usd_yr_vs_bench": -3122,
+  "dk_central": 2.139,
+  "dk_worst": 2.284,
+  "flash_C_model": 186,
+  "biodegradable_frac": 0.35,
+  "trace_ohm_worst": 46.85
+ },
+ {
+  "fluid": "Lead G (biodegradable)",
+  "chip_dT_vs_bench_C": -0.246,
+  "max_chip_W_at_70C": 1321,
+  "pump_kW_per_MW": 16.52,
+  "pump_usd_yr_vs_bench": -5477,
+  "dk_central": 2.138,
+  "dk_worst": 2.294,
+  "flash_C_model": 170,
+  "biodegradable_frac": 1.0,
+  "trace_ohm_worst": 46.82
+ },
+ {
+  "fluid": "Lead P (premium flash)",
+  "chip_dT_vs_bench_C": -0.282,
+  "max_chip_W_at_70C": 1323,
+  "pump_kW_per_MW": 20.44,
+  "pump_usd_yr_vs_bench": 118,
+  "dk_central": 2.12,
+  "dk_worst": 2.216,
+  "flash_C_model": 216,
+  "biodegradable_frac": 0.19,
+  "trace_ohm_worst": 47.0
+ },
+ {
+  "fluid": "All-ester (needs GHz Dk data)",
+  "chip_dT_vs_bench_C": -1.314,
+  "max_chip_W_at_70C": 1386,
+  "pump_kW_per_MW": 17.13,
+  "pump_usd_yr_vs_bench": -4600,
+  "dk_central": 2.301,
+  "dk_worst": 2.904,
+  "flash_C_model": 219,
+  "biodegradable_frac": 1.0,
+  "trace_ohm_worst": 45.52
+ }
+]

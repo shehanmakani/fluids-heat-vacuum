@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ThermalForm Fluid Selector</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Syne:wght@600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: tool. Header band; two columns on desktop (inputs 340px | results), stacked on phones. Results = recommendation card, then a comparison table with inline bars and pass/fail chips. ChemeNova ink/teal/gold. */
+:root{
+  --ink:#0f1f1d; --muted:#5a6a68; --line:#d9e2e0; --bg:#f4f7f6; --surface:#ffffff; --tint:#ebf2f1;
+  --teal:#0f7c72; --teal-soft:#d4ebe7; --gold:#a8771f; --gold-soft:#f3e7cf; --bad:#b0412f; --bad-soft:#f6ddd8; --warn:#93620c; --warn-soft:#f5ead0;
+  --bar:#b9c6c4; --bar-acc:#0f7c72;
+  --display:"Cormorant Garamond",Georgia,"Times New Roman",serif;
+  --ui:"Syne",ui-sans-serif,system-ui,sans-serif;
+  --body:"DM Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"DM Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --ink:#e4efed; --muted:#9db0ad; --line:#2a3a38; --bg:#0c1615; --surface:#13201f; --tint:#172826;
+  --teal:#3fb8aa; --teal-soft:#16393a; --gold:#d9a54a; --gold-soft:#3a2f1a; --bad:#e2846f; --bad-soft:#3d221d; --warn:#e0b25a; --warn-soft:#3a2f17;
+  --bar:#3c4f4d; --bar-acc:#3fb8aa; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --ink:#e4efed; --muted:#9db0ad; --line:#2a3a38; --bg:#0c1615; --surface:#13201f; --tint:#172826;
+  --teal:#3fb8aa; --teal-soft:#16393a; --gold:#d9a54a; --gold-soft:#3a2f1a; --bad:#e2846f; --bad-soft:#3d221d; --warn:#e0b25a; --warn-soft:#3a2f17;
+  --bar:#3c4f4d; --bar-acc:#3fb8aa; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:14.5px/1.55 var(--body);margin:0}
+.wrap{max-width:1240px;margin:0 auto;padding-block:28px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header{display:grid;gap:6px;margin-bottom:22px}
+.eyebrow{font:600 11px/1 var(--ui);letter-spacing:.14em;text-transform:uppercase;color:var(--teal)}
+h1{font:600 clamp(32px,5vw,46px)/1.02 var(--display);margin:4px 0 6px;letter-spacing:-.01em;text-wrap:balance}
+.lede{max-width:72ch;color:var(--muted);margin:0}
+.layout{display:grid;grid-template-columns:340px minmax(0,1fr);gap:22px;align-items:start}
+@media (max-width:900px){.layout{grid-template-columns:1fr}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;display:grid;gap:18px}
+fieldset{border:0;margin:0;padding:0;display:grid;gap:12px}
+legend{font:700 12px var(--ui);letter-spacing:.08em;text-transform:uppercase;color:var(--ink);margin-bottom:4px;padding:0}
+.field{display:grid;gap:5px}
+.field label{display:flex;justify-content:space-between;gap:8px;font-size:13px;color:var(--ink)}
+.field label output{font:500 13px var(--mono);color:var(--teal);font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--teal)}
+.seg{display:flex;flex-wrap:wrap;gap:4px}
+.seg button{font:500 12.5px var(--body);border:1px solid var(--line);background:transparent;color:var(--ink);padding:6px 10px;border-radius:999px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.seg button:focus-visible,.reset:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.hint{font-size:12px;color:var(--muted);margin:0}
+.reset{justify-self:start;font:500 12.5px var(--body);background:none;border:0;color:var(--teal);cursor:pointer;padding:0;text-decoration:underline}
+.results{display:grid;gap:18px;min-width:0}
+.rec{background:var(--surface);border:1px solid var(--teal);box-shadow:inset 0 0 0 1px var(--teal);border-radius:12px;padding:20px;display:grid;gap:12px}
+.rec .tag{font:600 11px var(--ui);letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.rec h2{font:600 30px/1.05 var(--display);margin:0}
+.rec .rx{font:500 14px var(--body);color:var(--muted)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.kpi{background:var(--tint);border-radius:9px;padding:10px 12px;display:grid;gap:2px}
+.kpi .v{font:500 20px var(--mono);font-variant-numeric:tabular-nums}
+.kpi .l{font-size:12px;color:var(--muted)}
+.why{margin:0;padding-left:18px;display:grid;gap:4px;font-size:13.5px}
+.none{background:var(--warn-soft);color:var(--ink);border-radius:12px;padding:16px}
+.tablecard{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;min-width:0;display:grid;gap:10px}
+.tablecard h3{font:700 13px var(--ui);letter-spacing:.06em;text-transform:uppercase;margin:0}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:13px;min-width:900px}
+td:last-child{min-width:190px}
+th,td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
+th{font:500 10.5px var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+tr.out td{color:var(--muted)}
+tr.out td.name b{font-weight:500}
+.name b{font-weight:600}
+.name small{display:block;color:var(--muted);font-size:11.5px}
+.bar{display:flex;align-items:center;gap:8px;justify-content:flex-end}
+.bar i{display:block;height:8px;border-radius:4px;background:var(--bar)}
+.bar i.acc{background:var(--bar-acc)}
+.pill{display:inline-block;font:500 10.5px/1 var(--mono);padding:4px 7px;border-radius:999px;white-space:nowrap;margin:1px 2px 1px 0}
+.pill.ok{background:var(--teal-soft);color:var(--teal)}
+.pill.no{background:var(--bad-soft);color:var(--bad)}
+.pill.edge{background:var(--warn-soft);color:var(--warn)}
+.foot{font-size:12px;color:var(--muted);max-width:90ch;display:grid;gap:6px}
+.foot b{color:var(--ink);font-weight:600}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow"><a href="index.html" style="color:inherit">← Fluids for Heat and Vacuum</a> · ChemeNova · ThermalForm</div>
+    <h1>Which immersion fluid fits your hardware?</h1>
+    <p class="lede">Set your chips, heat sinks, facility loop and requirements. The selector checks every fluid against the OCP immersion-fluid specification, models chip-side cooling and loop pumping with the physics in our technical report, and recommends the best fit.</p>
+  </header>
+
+  <div class="layout">
+    <form class="panel" id="form" autocomplete="off">
+      <fieldset>
+        <legend>Your hardware</legend>
+        <div class="field"><label for="q">Chip power <output id="q_o"></output></label><input type="range" id="q" min="300" max="2000" step="50" value="1000"></div>
+        <div class="field"><label for="gap">Heat-sink fin gap <output id="gap_o"></output></label><input type="range" id="gap" min="0.8" max="3" step="0.1" value="1.5"></div>
+        <div class="field"><label for="flow">Flow per heat sink <output id="flow_o"></output></label><input type="range" id="flow" min="2" max="15" step="0.5" value="6"></div>
+        <div class="field"><label for="tmax">Max heat-sink base temperature <output id="tmax_o"></output></label><input type="range" id="tmax" min="55" max="90" step="1" value="70"></div>
+        <div class="field"><label for="er">Board laminate Dk <output id="er_o"></output></label><input type="range" id="er" min="3.0" max="4.6" step="0.1" value="3.5"></div>
+      </fieldset>
+      <fieldset>
+        <legend>Your facility</legend>
+        <div class="field"><label for="mw">IT load <output id="mw_o"></output></label><input type="range" id="mw" min="0.5" max="50" step="0.5" value="1"></div>
+        <div class="field"><label for="tin">Fluid supply to tank <output id="tin_o"></output></label><input type="range" id="tin" min="25" max="50" step="1" value="40"></div>
+        <div class="field"><label for="dt">Tank temperature rise <output id="dt_o"></output></label><input type="range" id="dt" min="5" max="15" step="1" value="10"></div>
+        <div class="field"><label for="price">Electricity price <output id="price_o"></output></label><input type="range" id="price" min="0.05" max="0.35" step="0.005" value="0.163"></div>
+      </fieldset>
+      <fieldset>
+        <legend>Your requirements</legend>
+        <div class="field"><span class="hint">Flash point class</span><div class="seg" data-name="flash"><button type="button" data-v="150" aria-pressed="true">OCP minimum, 150 °C</button><button type="button" data-v="210" aria-pressed="false">Premium, 210 °C</button></div></div>
+        <div class="field"><span class="hint">Dielectric limit (OCP: Dk ≤ 2.3 to 40 GHz)</span><div class="seg" data-name="dk"><button type="button" data-v="worst" aria-pressed="true">Worst case</button><button type="button" data-v="central" aria-pressed="false">Central estimate</button></div></div>
+        <div class="field"><span class="hint">Readily biodegradable share</span><div class="seg" data-name="bio"><button type="button" data-v="0" aria-pressed="true">Any</button><button type="button" data-v="0.3" aria-pressed="false">≥ 30%</button><button type="button" data-v="1" aria-pressed="false">100%</button></div></div>
+        <div class="field"><span class="hint">Rank fits by</span><div class="seg" data-name="goal"><button type="button" data-v="balanced" aria-pressed="true">Balanced</button><button type="button" data-v="cool" aria-pressed="false">Coolest chip</button><button type="button" data-v="pump" aria-pressed="false">Lowest pumping</button></div></div>
+      </fieldset>
+      <button type="button" class="reset" id="reset">Reset to the example data center</button>
+    </form>
+
+    <section class="results" aria-live="polite">
+      <div id="rec"></div>
+      <div class="tablecard">
+        <h3>Every fluid, checked</h3>
+        <div class="scroll"><table id="tbl"></table></div>
+      </div>
+      <div class="foot">
+        <div><b>How it works.</b> Chip side: copper plate-fin heat sink (90 × 90 mm, 30 mm fins) with laminar developing-flow heat transfer and fin efficiency. Facility side: per-MW loop with a chevron plate heat exchanger and 60 m of 150 mm pipe at 65% pump efficiency. Trace impedance: a microstrip designed for 50 Ω in air, then immersed. Fluid properties come from published data sheets through the blending models in our technical report, and this page reproduces our Python models to within 0.01%.</div>
+        <div><b>Screening estimates, not certification.</b> Ester permittivity at 20–40 GHz is unmeasured, so "worst case" uses each ester's 100 kHz value. Flash points are open-cup model values; OCP's base spec uses closed cup. Fluid purchase price is left out because supplier quotes are pending. Talk to <a href="https://chemenova.com">ChemeNova</a> before specifying a fluid.</div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<script>
+// ThermalForm co-design engine (browser port of thermalform/physics.py, loop.py, dielectric.py).
+// Fluid properties come from tables exported by the validated Python models.
+const TF = (() => {
+  const G = 9.81;
+  function props(fl, T, grid) {
+    const t = Math.min(Math.max(T, grid[0]), grid[grid.length - 1]);
+    let i = 0;
+    while (i < grid.length - 2 && grid[i + 1] < t) i++;
+    const f = (t - grid[i]) / (grid[i + 1] - grid[i]);
+    const at = a => a[i] + (a[i + 1] - a[i]) * f;
+    const nuL = Math.exp(Math.log(fl.tab.nu[i]) + (Math.log(fl.tab.nu[i + 1]) - Math.log(fl.tab.nu[i])) * f);
+    const rho = at(fl.tab.rho), k = at(fl.tab.k), cp = at(fl.tab.cp), beta = at(fl.tab.beta);
+    const mu = nuL * rho;
+    return { rho, nu: nuL, mu, k, cp, beta, Pr: mu * cp / k };
+  }
+  function sink(o) { // o: W,L,H,t,b,kfin,eta
+    const nFins = Math.floor((o.W + o.b) / (o.b + o.t));
+    return { ...o, nFins, nCh: nFins - 1 };
+  }
+  function finCond(h, hs) {
+    const m = Math.sqrt(2 * h / (hs.kfin * hs.t));
+    const eta = Math.tanh(m * hs.H) / (m * hs.H);
+    const aFin = hs.nFins * 2 * hs.H * hs.L;
+    const aBase = Math.max(hs.W - hs.nFins * hs.t, 0) * hs.L;
+    return { hA: h * (eta * aFin + aBase), eta };
+  }
+  function forced(fl, grid, vdot, hs, Q, Tin) {
+    let Tf = Tin + 15, p, u, h, rConv, rCal, Tb, eta;
+    for (let it = 0; it < 8; it++) {
+      p = props(fl, Tf, grid);
+      u = vdot / (hs.nCh * hs.b * hs.H);
+      const reB = u * hs.b / p.nu, reS = reB * hs.b / hs.L;
+      const nuB = Math.pow(Math.pow(reS * p.Pr / 2, -3) +
+        Math.pow(0.664 * Math.sqrt(reS) * Math.pow(p.Pr, 1 / 3) * Math.sqrt(1 + 3.65 / Math.sqrt(reS)), -3), -1 / 3);
+      h = nuB * p.k / hs.b;
+      const fc = finCond(h, hs); eta = fc.eta;
+      const mdot = p.rho * vdot;
+      rConv = 1 / fc.hA; rCal = 1 / (2 * mdot * p.cp);
+      Tb = Tin + Q * (rConv + rCal);
+      const Tfm = Tin + Q / (2 * mdot * p.cp);
+      const Tn = Math.min(0.5 * (Tb + Tfm), 150);
+      if (Math.abs(Tn - Tf) < 0.01) break;
+      Tf = Tn;
+    }
+    const dh = 2 * hs.b * hs.H / (hs.b + hs.H), reDh = u * dh / p.nu, lStar = hs.L / (dh * reDh);
+    const fRe = Math.sqrt(Math.pow(3.44 / Math.sqrt(lStar), 2) + 24 * 24);
+    const dyn = 0.5 * p.rho * u * u, sigma = hs.b / (hs.b + hs.t);
+    const dp = 4 * (fRe / reDh) * (hs.L / dh) * dyn + (0.42 * (1 - sigma * sigma) + Math.pow(1 - sigma, 2)) * dyn;
+    return { R: rConv + rCal, Tb, Tfilm: Tf, h, eta, Re: reDh, dp, Pfan: vdot * dp / hs.eta };
+  }
+  // --- facility loop ---
+  function water(T) {
+    const mu = 2.414e-5 * Math.pow(10, 247.8 / (T + 133.15));
+    const rho = 1000 - 0.0178 * Math.pow(Math.abs(T - 4), 1.7);
+    const k = 0.5706 + 0.00175 * T - 6.9e-6 * T * T, cp = 4180;
+    return { rho, mu, nu: mu / rho, k, cp, Pr: mu * cp / k };
+  }
+  function martinXi(re, phi) {
+    let x0, x1;
+    if (re < 2000) { x0 = 64 / re; x1 = 597 / re + 3.85; }
+    else { x0 = Math.pow(1.8 * Math.log10(re) - 1.5, -2); x1 = 39 / Math.pow(re, 0.289); }
+    const c = Math.cos(phi);
+    const inv = c / Math.sqrt(0.045 * Math.tan(phi) + 0.09 * Math.sin(phi) + x0 / c) + (1 - c) / Math.sqrt(3.8 * x1);
+    return Math.pow(inv, -2);
+  }
+  const HX = { width: 0.45, length: 1.2, b: 0.0025, phi: 60, enlarge: 1.17, nPlates: 121, tPlate: 0.0005, kPlate: 16 };
+  function side(vdot, p, hx, vr) {
+    const nCh = Math.floor((hx.nPlates - 1) / 2), dh = 2 * hx.b / hx.enlarge, phi = hx.phi * Math.PI / 180;
+    const u = vdot / (nCh * hx.width * hx.b), re = u * dh / p.nu, xi = martinXi(re, phi);
+    const Nu = 0.122 * Math.pow(p.Pr, 1 / 3) * Math.pow(vr, 1 / 6) * Math.pow(xi * re * re * Math.sin(2 * phi), 0.374);
+    return { h: Nu * p.k / dh, dp: xi * hx.length / dh * p.rho * u * u / 2, re };
+  }
+  function eps(ntu, cr) {
+    if (Math.abs(1 - cr) < 1e-9) return ntu / (1 + ntu);
+    const e = Math.exp(-ntu * (1 - cr));
+    return (1 - e) / (1 - cr * e);
+  }
+  function loop(fl, grid, o) { // o: Q (W), Tsup, dT, waterKgS, pipeD, pipeL, kMinor, etaPump, rough
+    const hx = { ...HX };
+    const nPerMW = o.Q / 1e6;                     // scale exchanger and pipe count with load: one 1 MW module per MW
+    const Q1 = 1e6;
+    const Tret = o.Tsup + o.dT, Tm = o.Tsup + o.dT / 2;
+    const pf = props(fl, Tm, grid);
+    const vdot = Q1 / (pf.rho * pf.cp * o.dT), Ch = pf.rho * vdot * pf.cp;
+    const area = (hx.nPlates - 2) * hx.width * hx.length * hx.enlarge;
+    let Twin = o.Tsup - 5, sf, sw;
+    for (let it = 0; it < 30; it++) {
+      const Twout = Twin + Q1 / (o.waterKgS * 4180), Twm = 0.5 * (Twin + Twout);
+      const pw = water(Twm), vw = o.waterKgS / pw.rho, Twall = 0.5 * (Tm + Twm);
+      sf = side(vdot, pf, hx, pf.mu / props(fl, Twall, grid).mu);
+      sw = side(vw, pw, hx, pw.mu / water(Twall).mu);
+      const U = 1 / (1 / sf.h + hx.tPlate / hx.kPlate + 1 / sw.h);
+      const Cc = o.waterKgS * pw.cp, cmin = Math.min(Ch, Cc), cmax = Math.max(Ch, Cc);
+      const e = eps(U * area / cmin, cmin / cmax);
+      const n = Tret - Q1 / (e * cmin);
+      if (Math.abs(n - Twin) < 1e-4) { Twin = n; break; }
+      Twin = n;
+    }
+    const a = Math.PI * o.pipeD * o.pipeD / 4, u = vdot / a, re = u * o.pipeD / pf.nu;
+    const f = re < 2300 ? 64 / re : Math.pow(-1.8 * Math.log10(Math.pow(o.rough / o.pipeD / 3.7, 1.11) + 6.9 / re), -2);
+    const dyn = pf.rho * u * u / 2;
+    const dpPipe = f * o.pipeL / o.pipeD * dyn + o.kMinor * dyn;
+    const dp = sf.dp + dpPipe, P1 = vdot * dp / o.etaPump;
+    return { flowLpm: vdot * 60000 * nPerMW, dpKpa: dp / 1000, dpHx: sf.dp / 1000, dpPipe: dpPipe / 1000,
+             pumpKw: P1 / 1000 * nPerMW, Twin };
+  }
+  // --- microstrip ---
+  function eeffAir(er, u) {
+    const a = 1 + Math.log((u ** 4 + (u / 52) ** 2) / (u ** 4 + 0.432)) / 49 + Math.log(1 + (u / 18.1) ** 3) / 18.7;
+    const b = 0.564 * Math.pow((er - 0.9) / (er + 3), 0.053);
+    return (er + 1) / 2 + (er - 1) / 2 * Math.pow(1 + 10 / u, -a * b);
+  }
+  function z0vac(u) {
+    const f = 6 + (2 * Math.PI - 6) * Math.exp(-Math.pow(30.666 / u, 0.7528));
+    return 376.73 / (2 * Math.PI) * Math.log(f / u + Math.sqrt(1 + (2 / u) ** 2));
+  }
+  function z0(er, u, ec) { const ea = eeffAir(er, u), q = (ea - 1) / (er - 1); return z0vac(u) / Math.sqrt(q * er + (1 - q) * ec); }
+  function widthFor(z, er) { let lo = 0.05, hi = 20; for (let i = 0; i < 80; i++) { const m = Math.sqrt(lo * hi); if (z0(er, m, 1) > z) lo = m; else hi = m; } return Math.sqrt(lo * hi); }
+  function traceZ(dk, er, zt) { const u = widthFor(zt, er); return z0(er, u, dk); }
+  return { forced, loop, sink, traceZ, props };
+})();
+
+
+const DATA = {"T":[0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80,82,84,86,88,90,92,94,96,98,100],"fluids":[{"key":"bench","name":"PAO benchmark","recipe":"PAO 4 88% + PAO 2 12%","fam":"pao","flash":197.993453513602,"pour":null,"dk":2.08,"dk_w":2.08,"biodeg":0.0,"biobased":0.0,"cost":4.061385099685205,"mu50":0.008261430473208278,"fom1_50":47.00503245472186,"mineral":0.0,"ox":0.0,"w20":11.0,"tab":{"rho":[825.337,824.194,823.051,821.908,820.765,819.622,818.479,817.336,816.193,815.05,813.907,812.764,811.621,810.478,809.335,808.192,807.049,805.906,804.763,803.62,802.477,801.334,800.191,799.048,797.905,796.762,795.619,794.476,793.333,792.19,791.047,789.904,788.761,787.618,786.475,785.332,784.189,783.047,781.904,780.761,779.618,778.475,777.332,776.189,775.046,773.903,772.76,771.617,770.474,769.331,768.188],"nu":[8.50591e-05,7.55532e-05,6.73674e-05,6.02894e-05,5.41452e-05,4.87914e-05,4.41093e-05,4.00003e-05,3.63821e-05,3.31856e-05,3.03529e-05,2.7835e-05,2.55905e-05,2.35839e-05,2.17853e-05,2.01689e-05,1.87126e-05,1.73973e-05,1.62066e-05,1.51263e-05,1.41439e-05,1.32488e-05,1.24314e-05,1.16836e-05,1.09982e-05,1.03688e-05,9.78968e-06,9.25603e-06,8.76342e-06,8.30795e-06,7.88617e-06,7.495e-06,7.13166e-06,6.79372e-06,6.47894e-06,6.18536e-06,5.91119e-06,5.65482e-06,5.4148e-06,5.18983e-06,4.97871e-06,4.78038e-06,4.59386e-06,4.41825e-06,4.25275e-06,4.09662e-06,3.9492e-06,3.80985e-06,3.67802e-06,3.5532e-06,3.4349e-06],"k":[0.151921,0.151727,0.151533,0.151339,0.151145,0.150951,0.150757,0.150563,0.150369,0.150175,0.149981,0.149787,0.149593,0.149399,0.149205,0.149011,0.148818,0.148624,0.14843,0.148236,0.148042,0.147848,0.147654,0.14746,0.147266,0.147072,0.146878,0.146684,0.14649,0.146296,0.146102,0.145908,0.145714,0.145521,0.145327,0.145133,0.144939,0.144745,0.144551,0.144357,0.144163,0.143969,0.143775,0.143581,0.143387,0.143193,0.142999,0.142805,0.142611,0.142418,0.142224],"cp":[1989.03,1997.09,2005.15,2013.21,2021.27,2029.33,2037.38,2045.44,2053.5,2061.56,2069.62,2077.67,2085.73,2093.79,2101.85,2109.91,2117.97,2126.02,2134.08,2142.14,2150.2,2158.26,2166.32,2174.38,2182.43,2190.49,2198.55,2206.61,2214.67,2222.72,2230.78,2238.84,2246.9,2254.96,2263.02,2271.07,2279.13,2287.19,2295.25,2303.31,2311.37,2319.42,2327.48,2335.54,2343.6,2351.66,2359.72,2367.78,2375.83,2383.89,2391.95],"beta":[0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007]}},{"key":"A","name":"Lead A \u00b7 all-round","recipe":"PAO 4 40% + Priolube 1976 35% + PAO 2 25%","fam":"lead","flash":186.19994251206498,"pour":-35.0,"dk":2.1394062946999624,"dk_w":2.2836582804720513,"biodeg":0.35,"biobased":0.0,"cost":5.0765892522761735,"mu50":0.00835417964591699,"fom1_50":48.438927634384726,"mineral":0.0,"ox":0.0,"w20":189.14999999999998,"tab":{"rho":[865.052,863.828,862.605,861.382,860.159,858.935,857.712,856.489,855.266,854.042,852.819,851.596,850.373,849.149,847.926,846.703,845.479,844.256,843.033,841.81,840.586,839.363,838.14,836.916,835.693,834.47,833.246,832.023,830.8,829.576,828.353,827.13,825.906,824.683,823.46,822.236,821.013,819.79,818.566,817.343,816.119,814.896,813.673,812.449,811.226,810.002,808.779,807.556,806.332,805.109,803.885],"nu":[7.71894e-05,6.88318e-05,6.16046e-05,5.53302e-05,4.98624e-05,4.50802e-05,4.0883e-05,3.71868e-05,3.39213e-05,3.10272e-05,2.84545e-05,2.6161e-05,2.41106e-05,2.22726e-05,2.06206e-05,1.91322e-05,1.77879e-05,1.65709e-05,1.54667e-05,1.44626e-05,1.35475e-05,1.2712e-05,1.19476e-05,1.12469e-05,1.06034e-05,1.00114e-05,9.46578e-06,8.96214e-06,8.49647e-06,8.06523e-06,7.66528e-06,7.29378e-06,6.94824e-06,6.62638e-06,6.32619e-06,6.04585e-06,5.7837e-06,5.53827e-06,5.30823e-06,5.09235e-06,4.88954e-06,4.6988e-06,4.51922e-06,4.34998e-06,4.19032e-06,4.03956e-06,3.89706e-06,3.76224e-06,3.63459e-06,3.51362e-06,3.39887e-06],"k":[0.151565,0.151371,0.151177,0.150983,0.150789,0.150595,0.150401,0.150207,0.150013,0.14982,0.149626,0.149432,0.149238,0.149044,0.14885,0.148656,0.148462,0.148268,0.148074,0.14788,0.147686,0.147492,0.147298,0.147104,0.14691,0.146717,0.146523,0.146329,0.146135,0.145941,0.145747,0.145553,0.145359,0.145165,0.144971,0.144777,0.144583,0.144389,0.144195,0.144001,0.143807,0.143613,0.14342,0.143226,0.143032,0.142838,0.142644,0.14245,0.142256,0.142062,0.141868],"cp":[2009.89,2017.94,2026.0,2034.06,2042.12,2050.18,2058.24,2066.29,2074.35,2082.41,2090.47,2098.53,2106.59,2114.64,2122.7,2130.76,2138.82,2146.88,2154.94,2162.99,2171.05,2179.11,2187.17,2195.23,2203.29,2211.34,2219.4,2227.46,2235.52,2243.58,2251.64,2259.69,2267.75,2275.81,2283.87,2291.93,2299.99,2308.04,2316.1,2324.16,2332.22,2340.28,2348.34,2356.39,2364.45,2372.51,2380.57,2388.63,2396.69,2404.74,2412.8],"beta":[0.0007157,0.000715701,0.000715702,0.000715703,0.000715704,0.000715705,0.000715706,0.000715707,0.000715708,0.000715709,0.00071571,0.000715711,0.000715712,0.000715713,0.000715714,0.000715715,0.000715716,0.000715717,0.000715718,0.000715719,0.00071572,0.000715721,0.000715722,0.000715723,0.000715725,0.000715726,0.000715727,0.000715728,0.000715729,0.00071573,0.000715731,0.000715732,0.000715733,0.000715734,0.000715735,0.000715737,0.000715738,0.000715739,0.00071574,0.000715741,0.000715742,0.000715743,0.000715744,0.000715746,0.000715747,0.000715748,0.000715749,0.00071575,0.000715751,0.000715752,0.000715754]}},{"key":"G","name":"Lead G \u00b7 fully biodegradable","recipe":"Renewable isoparaffin 62% + Priolube 1976 38%","fam":"lead","flash":169.73054693256398,"pour":-35.0,"dk":2.1376613243069786,"dk_w":2.2943172762881243,"biodeg":1.0,"biobased":0.62,"cost":5.681412165036154,"mu50":0.007541978217313808,"fom1_50":50.74526021490957,"mineral":0.0,"ox":0.0,"w20":204.42000000000002,"tab":{"rho":[865.552,864.173,862.795,861.416,860.037,858.659,857.28,855.901,854.523,853.144,851.765,850.386,849.008,847.629,846.25,844.871,843.493,842.114,840.735,839.356,837.977,836.598,835.22,833.841,832.462,831.083,829.704,828.325,826.946,825.567,824.188,822.809,821.43,820.051,818.672,817.293,815.914,814.535,813.156,811.777,810.397,809.018,807.639,806.26,804.881,803.502,802.122,800.743,799.364,797.985,796.605],"nu":[6.01525e-05,5.41567e-05,4.89174e-05,4.43229e-05,4.02804e-05,3.67118e-05,3.35516e-05,3.07447e-05,2.82442e-05,2.60105e-05,2.40096e-05,2.22126e-05,2.05946e-05,1.91343e-05,1.78131e-05,1.66151e-05,1.55264e-05,1.4535e-05,1.36302e-05,1.28029e-05,1.2045e-05,1.13494e-05,1.07098e-05,1.01207e-05,9.57718e-06,9.07488e-06,8.60996e-06,8.17898e-06,7.77886e-06,7.40687e-06,7.06054e-06,6.73767e-06,6.43627e-06,6.15457e-06,5.89094e-06,5.64393e-06,5.41224e-06,5.19465e-06,4.99009e-06,4.79758e-06,4.61621e-06,4.44517e-06,4.28372e-06,4.13117e-06,3.9869e-06,3.85034e-06,3.72095e-06,3.59827e-06,3.48184e-06,3.37126e-06,3.26616e-06],"k":[0.147461,0.147267,0.147074,0.14688,0.146686,0.146492,0.146298,0.146104,0.14591,0.145716,0.145522,0.145328,0.145134,0.14494,0.144746,0.144552,0.144358,0.144164,0.143971,0.143777,0.143583,0.143389,0.143195,0.143001,0.142807,0.142613,0.142419,0.142225,0.142031,0.141837,0.141643,0.141449,0.141255,0.141061,0.140867,0.140674,0.14048,0.140286,0.140092,0.139898,0.139704,0.13951,0.139316,0.139122,0.138928,0.138734,0.13854,0.138346,0.138152,0.137958,0.137764],"cp":[2056.14,2064.2,2072.26,2080.32,2088.38,2096.44,2104.49,2112.55,2120.61,2128.67,2136.73,2144.79,2152.84,2160.9,2168.96,2177.02,2185.08,2193.14,2201.19,2209.25,2217.31,2225.37,2233.43,2241.49,2249.54,2257.6,2265.66,2273.72,2281.78,2289.84,2297.89,2305.95,2314.01,2322.07,2330.13,2338.19,2346.24,2354.3,2362.36,2370.42,2378.48,2386.54,2394.59,2402.65,2410.71,2418.77,2426.83,2434.89,2442.94,2451.0,2459.06],"beta":[0.000809301,0.000809304,0.000809308,0.000809311,0.000809315,0.000809318,0.000809322,0.000809326,0.000809329,0.000809333,0.000809336,0.00080934,0.000809344,0.000809347,0.000809351,0.000809355,0.000809358,0.000809362,0.000809366,0.00080937,0.000809373,0.000809377,0.000809381,0.000809385,0.000809389,0.000809392,0.000809396,0.0008094,0.000809404,0.000809408,0.000809412,0.000809415,0.000809419,0.000809423,0.000809427,0.000809431,0.000809435,0.000809439,0.000809443,0.000809447,0.000809451,0.000809455,0.000809459,0.000809463,0.000809467,0.000809471,0.000809475,0.000809479,0.000809483,0.000809488,0.000809492]}},{"key":"P","name":"Lead P \u00b7 premium flash","recipe":"PAO 4 81% + EF 7010 19%","fam":"lead","flash":216.0836219292073,"pour":-35.0,"dk":2.1203011769871485,"dk_w":2.215517173710686,"biodeg":0.19,"biobased":0.0,"cost":4.516912455213907,"mu50":0.008970300881677398,"fom1_50":47.070346162319595,"mineral":0.0,"ox":0.0,"w20":107.71,"tab":{"rho":[846.169,844.983,843.798,842.613,841.427,840.242,839.056,837.871,836.686,835.5,834.315,833.129,831.944,830.759,829.573,828.388,827.202,826.017,824.832,823.646,822.461,821.275,820.09,818.904,817.719,816.534,815.348,814.163,812.977,811.792,810.606,809.421,808.235,807.05,805.865,804.679,803.494,802.308,801.123,799.937,798.752,797.566,796.381,795.195,794.01,792.824,791.639,790.453,789.268,788.082,786.897],"nu":[8.90755e-05,7.92143e-05,7.07087e-05,6.33429e-05,5.69397e-05,5.13526e-05,4.64604e-05,4.2162e-05,3.83727e-05,3.50216e-05,3.20491e-05,2.94045e-05,2.70449e-05,2.49339e-05,2.30403e-05,2.13373e-05,1.9802e-05,1.84145e-05,1.71578e-05,1.60169e-05,1.49791e-05,1.40329e-05,1.31686e-05,1.23775e-05,1.16522e-05,1.09858e-05,1.03726e-05,9.80738e-06,9.28545e-06,8.80277e-06,8.35568e-06,7.94095e-06,7.55567e-06,7.19724e-06,6.86333e-06,6.55187e-06,6.26096e-06,5.9889e-06,5.73418e-06,5.49539e-06,5.2713e-06,5.06076e-06,4.86273e-06,4.67629e-06,4.50057e-06,4.3348e-06,4.17825e-06,4.03028e-06,3.8903e-06,3.75774e-06,3.63211e-06],"k":[0.153782,0.153588,0.153394,0.1532,0.153006,0.152812,0.152618,0.152424,0.15223,0.152036,0.151842,0.151648,0.151455,0.151261,0.151067,0.150873,0.150679,0.150485,0.150291,0.150097,0.149903,0.149709,0.149515,0.149321,0.149127,0.148933,0.148739,0.148545,0.148351,0.148158,0.147964,0.14777,0.147576,0.147382,0.147188,0.146994,0.1468,0.146606,0.146412,0.146218,0.146024,0.14583,0.145636,0.145442,0.145248,0.145055,0.144861,0.144667,0.144473,0.144279,0.144085],"cp":[1975.62,1983.68,1991.74,1999.79,2007.85,2015.91,2023.97,2032.03,2040.09,2048.14,2056.2,2064.26,2072.32,2080.38,2088.44,2096.49,2104.55,2112.61,2120.67,2128.73,2136.79,2144.84,2152.9,2160.96,2169.02,2177.08,2185.14,2193.19,2201.25,2209.31,2217.37,2225.43,2233.49,2241.54,2249.6,2257.66,2265.72,2273.78,2281.84,2289.89,2297.95,2306.01,2314.07,2322.13,2330.19,2338.24,2346.3,2354.36,2362.42,2370.48,2378.54],"beta":[0.000708608,0.000708609,0.00070861,0.00070861,0.000708611,0.000708612,0.000708612,0.000708613,0.000708614,0.000708615,0.000708615,0.000708616,0.000708617,0.000708617,0.000708618,0.000708619,0.000708619,0.00070862,0.000708621,0.000708621,0.000708622,0.000708623,0.000708624,0.000708624,0.000708625,0.000708626,0.000708626,0.000708627,0.000708628,0.000708629,0.000708629,0.00070863,0.000708631,0.000708631,0.000708632,0.000708633,0.000708634,0.000708634,0.000708635,0.000708636,0.000708637,0.000708637,0.000708638,0.000708639,0.00070864,0.00070864,0.000708641,0.000708642,0.000708643,0.000708643,0.000708644]}},{"key":"S","name":"All-ester (needs GHz test)","recipe":"EF 7010 52% + Priolube 1976 48%","fam":"syn","flash":219.06346625966256,"pour":-35.0,"dk":2.3012646961476944,"dk_w":2.9038803354140357,"biodeg":1.0,"biobased":0.0,"cost":6.999999999999999,"mu50":0.010161282619171493,"fom1_50":49.917056583358764,"mineral":0.0,"ox":0.0,"w20":520.0,"tab":{"rho":[948.172,946.771,945.37,943.969,942.567,941.166,939.765,938.364,936.962,935.561,934.16,932.759,931.357,929.956,928.555,927.154,925.752,924.351,922.95,921.549,920.147,918.746,917.345,915.944,914.543,913.141,911.74,910.339,908.938,907.536,906.135,904.734,903.333,901.931,900.53,899.129,897.728,896.326,894.925,893.524,892.123,890.721,889.32,887.919,886.518,885.117,883.715,882.314,880.913,879.512,878.11],"nu":[7.93112e-05,7.11427e-05,6.40279e-05,5.78087e-05,5.23536e-05,4.75528e-05,4.33145e-05,3.9561e-05,3.62272e-05,3.32576e-05,3.0605e-05,2.82294e-05,2.60962e-05,2.41761e-05,2.24435e-05,2.08766e-05,1.94562e-05,1.81659e-05,1.69914e-05,1.592e-05,1.49408e-05,1.40441e-05,1.32215e-05,1.24655e-05,1.17696e-05,1.11278e-05,1.05351e-05,9.98672e-06,9.47868e-06,9.00728e-06,8.56926e-06,8.16169e-06,7.78195e-06,7.42767e-06,7.09672e-06,6.78719e-06,6.49734e-06,6.22561e-06,5.97057e-06,5.73095e-06,5.50556e-06,5.29334e-06,5.09332e-06,4.90461e-06,4.72641e-06,4.55798e-06,4.39862e-06,4.24773e-06,4.10473e-06,3.96909e-06,3.84034e-06],"k":[0.156711,0.156517,0.156323,0.156129,0.155935,0.155741,0.155547,0.155353,0.155159,0.154965,0.154771,0.154577,0.154384,0.15419,0.153996,0.153802,0.153608,0.153414,0.15322,0.153026,0.152832,0.152638,0.152444,0.15225,0.152056,0.151862,0.151668,0.151474,0.151281,0.151087,0.150893,0.150699,0.150505,0.150311,0.150117,0.149923,0.149729,0.149535,0.149341,0.149147,0.148953,0.148759,0.148565,0.148371,0.148177,0.147984,0.14779,0.147596,0.147402,0.147208,0.147014],"cp":[1982.73,1990.78,1998.84,2006.9,2014.96,2023.02,2031.08,2039.13,2047.19,2055.25,2063.31,2071.37,2079.43,2087.48,2095.54,2103.6,2111.66,2119.72,2127.77,2135.83,2143.89,2151.95,2160.01,2168.07,2176.13,2184.18,2192.24,2200.3,2208.36,2216.42,2224.47,2232.53,2240.59,2248.65,2256.71,2264.77,2272.83,2280.88,2288.94,2297.0,2305.06,2313.12,2321.17,2329.23,2337.29,2345.35,2353.41,2361.47,2369.53,2377.58,2385.64],"beta":[0.00075,0.00075,0.00075,0.00075,0.00075,0.00075,0.00075,0.00075,0.00075,0.00075,0.00075,0.00075,0.00075,0.00075,0.00075,0.00075,0.00075,0.00075,0.00075,0.00075,0.00075,0.00075,0.00075,0.00075,0.00075,0.00075,0.00075,0.00075,0.00075,0.00075,0.00075,0.00075,0.00075,0.00075,0.00075,0.00075,0.00075,0.00075,0.00075,0.00075,0.00075,0.00075,0.00075,0.00075,0.00075,0.00075,0.00075,0.00075,0.00075,0.00075,0.00075]}},{"key":"PAO4","name":"PAO 4","recipe":"Synfluid PAO 4","fam":"pao","flash":218.99999999999994,"pour":null,"dk":2.08,"dk_w":2.08,"biodeg":0.0,"biobased":0.0,"cost":4.0,"mu50":0.009699054774474091,"fom1_50":45.35604625391575,"mineral":0.0,"ox":0.0,"w20":11.0,"tab":{"rho":[827.943,826.797,825.65,824.504,823.357,822.21,821.064,819.917,818.771,817.624,816.477,815.331,814.184,813.038,811.891,810.744,809.598,808.451,807.305,806.158,805.011,803.865,802.718,801.572,800.425,799.278,798.132,796.985,795.839,794.692,793.545,792.399,791.252,790.106,788.959,787.812,786.666,785.519,784.373,783.226,782.079,780.933,779.786,778.64,777.493,776.346,775.2,774.053,772.907,771.76,770.613],"nu":[0.000109424,9.66762e-05,8.57554e-05,7.63603e-05,6.82448e-05,6.12069e-05,5.50806e-05,4.97283e-05,4.50359e-05,4.09082e-05,3.72654e-05,3.40404e-05,3.11767e-05,2.86265e-05,2.6349e-05,2.43096e-05,2.24787e-05,2.08306e-05,1.93437e-05,1.79989e-05,1.678e-05,1.56727e-05,1.46646e-05,1.3745e-05,1.29045e-05,1.21348e-05,1.14285e-05,1.07794e-05,1.01817e-05,9.63049e-06,9.12126e-06,8.6501e-06,8.21349e-06,7.80829e-06,7.4317e-06,7.08122e-06,6.7546e-06,6.4498e-06,6.16501e-06,5.89859e-06,5.64905e-06,5.41506e-06,5.19539e-06,4.98894e-06,4.7947e-06,4.61177e-06,4.43932e-06,4.27658e-06,4.12286e-06,3.97753e-06,3.84e-06],"k":[0.153685,0.153491,0.153297,0.153103,0.152909,0.152715,0.152521,0.152327,0.152133,0.151939,0.151745,0.151552,0.151358,0.151164,0.15097,0.150776,0.150582,0.150388,0.150194,0.15,0.149806,0.149612,0.149418,0.149224,0.14903,0.148836,0.148642,0.148448,0.148255,0.148061,0.147867,0.147673,0.147479,0.147285,0.147091,0.146897,0.146703,0.146509,0.146315,0.146121,0.145927,0.145733,0.145539,0.145345,0.145152,0.144958,0.144764,0.14457,0.144376,0.144182,0.143988],"cp":[1981.83,1989.89,1997.95,2006.01,2014.07,2022.12,2030.18,2038.24,2046.3,2054.36,2062.42,2070.47,2078.53,2086.59,2094.65,2102.71,2110.77,2118.82,2126.88,2134.94,2143.0,2151.06,2159.12,2167.17,2175.23,2183.29,2191.35,2199.41,2207.47,2215.53,2223.58,2231.64,2239.7,2247.76,2255.82,2263.87,2271.93,2279.99,2288.05,2296.11,2304.17,2312.22,2320.28,2328.34,2336.4,2344.46,2352.52,2360.57,2368.63,2376.69,2384.75],"beta":[0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007]}},{"key":"PAO2","name":"PAO 2","recipe":"Synfluid PAO 2","fam":"pao","flash":155.0,"pour":null,"dk":2.08,"dk_w":2.08,"biodeg":0.0,"biobased":0.0,"cost":4.5,"mu50":0.003101437727477951,"fom1_50":59.35017383105562,"mineral":0.0,"ox":0.0,"w20":11.0,"tab":{"rho":[806.714,805.597,804.48,803.363,802.245,801.128,800.011,798.894,797.777,796.659,795.542,794.425,793.308,792.191,791.073,789.956,788.839,787.722,786.605,785.487,784.37,783.253,782.136,781.019,779.901,778.784,777.667,776.55,775.433,774.315,773.198,772.081,770.964,769.847,768.729,767.612,766.495,765.378,764.261,763.143,762.026,760.909,759.792,758.675,757.557,756.44,755.323,754.206,753.089,751.971,750.854],"nu":[1.89639e-05,1.73837e-05,1.59795e-05,1.47277e-05,1.36083e-05,1.26046e-05,1.17019e-05,1.0888e-05,1.01523e-05,9.48557e-06,8.87992e-06,8.32851e-06,7.82535e-06,7.36526e-06,6.94368e-06,6.55662e-06,6.20058e-06,5.87248e-06,5.56958e-06,5.28947e-06,5.03e-06,4.78927e-06,4.56559e-06,4.35743e-06,4.16345e-06,3.98241e-06,3.81324e-06,3.65494e-06,3.50663e-06,3.36752e-06,3.23687e-06,3.11403e-06,2.99841e-06,2.88947e-06,2.78671e-06,2.68968e-06,2.59798e-06,2.51123e-06,2.42908e-06,2.35123e-06,2.27739e-06,2.20728e-06,2.14067e-06,2.07733e-06,2.01706e-06,1.95966e-06,1.90495e-06,1.85278e-06,1.80299e-06,1.75544e-06,1.71e-06],"k":[0.144685,0.144491,0.144297,0.144103,0.143909,0.143715,0.143521,0.143327,0.143133,0.142939,0.142745,0.142552,0.142358,0.142164,0.14197,0.141776,0.141582,0.141388,0.141194,0.141,0.140806,0.140612,0.140418,0.140224,0.14003,0.139836,0.139642,0.139448,0.139255,0.139061,0.138867,0.138673,0.138479,0.138285,0.138091,0.137897,0.137703,0.137509,0.137315,0.137121,0.136927,0.136733,0.136539,0.136345,0.136152,0.135958,0.135764,0.13557,0.135376,0.135182,0.134988],"cp":[2041.83,2049.89,2057.95,2066.01,2074.07,2082.12,2090.18,2098.24,2106.3,2114.36,2122.42,2130.47,2138.53,2146.59,2154.65,2162.71,2170.77,2178.82,2186.88,2194.94,2203.0,2211.06,2219.12,2227.17,2235.23,2243.29,2251.35,2259.41,2267.47,2275.53,2283.58,2291.64,2299.7,2307.76,2315.82,2323.87,2331.93,2339.99,2348.05,2356.11,2364.17,2372.22,2380.28,2388.34,2396.4,2404.46,2412.52,2420.57,2428.63,2436.69,2444.75],"beta":[0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007]}},{"key":"RHC8","name":"Renewable isoparaffin","recipe":"Renewable isoparaffin (Motul data)","fam":"pao","flash":159.0,"pour":null,"dk":2.07,"dk_w":2.07,"biodeg":1.0,"biobased":1.0,"cost":5.0,"mu50":0.004908195699426816,"fom1_50":55.010607564865516,"mineral":0.0,"ox":0.0,"w20":11.0,"tab":{"rho":[814.457,813.111,811.765,810.42,809.074,807.728,806.383,805.037,803.691,802.346,801.0,799.654,798.309,796.963,795.617,794.272,792.926,791.58,790.235,788.889,787.543,786.198,784.852,783.506,782.16,780.815,779.469,778.123,776.778,775.432,774.086,772.741,771.395,770.049,768.704,767.358,766.012,764.667,763.321,761.975,760.63,759.284,757.938,756.593,755.247,753.901,752.556,751.21,749.864,748.518,747.173],"nu":[3.38455e-05,3.08387e-05,2.81795e-05,2.58201e-05,2.37205e-05,2.18464e-05,2.01691e-05,1.86637e-05,1.73091e-05,1.60871e-05,1.4982e-05,1.39803e-05,1.30703e-05,1.22418e-05,1.14858e-05,1.07947e-05,1.01616e-05,9.58053e-06,9.04625e-06,8.5541e-06,8.1e-06,7.6803e-06,7.29177e-06,6.93154e-06,6.59705e-06,6.28599e-06,5.99633e-06,5.72621e-06,5.47399e-06,5.23818e-06,5.01743e-06,4.81053e-06,4.61639e-06,4.43401e-06,4.26249e-06,4.10102e-06,3.94883e-06,3.80527e-06,3.66969e-06,3.54155e-06,3.42031e-06,3.3055e-06,3.19669e-06,3.09347e-06,2.99548e-06,2.90238e-06,2.81385e-06,2.7296e-06,2.64937e-06,2.57292e-06,2.5e-06],"k":[0.143879,0.143685,0.143491,0.143297,0.143103,0.142909,0.142715,0.142521,0.142327,0.142133,0.141939,0.141745,0.141552,0.141358,0.141164,0.14097,0.140776,0.140582,0.140388,0.140194,0.14,0.139806,0.139612,0.139418,0.139224,0.13903,0.138836,0.138642,0.138448,0.138255,0.138061,0.137867,0.137673,0.137479,0.137285,0.137091,0.136897,0.136703,0.136509,0.136315,0.136121,0.135927,0.135733,0.135539,0.135345,0.135152,0.134958,0.134764,0.13457,0.134376,0.134182],"cp":[2078.83,2086.89,2094.95,2103.01,2111.07,2119.13,2127.18,2135.24,2143.3,2151.36,2159.42,2167.47,2175.53,2183.59,2191.65,2199.71,2207.77,2215.83,2223.88,2231.94,2240.0,2248.06,2256.12,2264.18,2272.23,2280.29,2288.35,2296.41,2304.47,2312.53,2320.58,2328.64,2336.7,2344.76,2352.82,2360.88,2368.93,2376.99,2385.05,2393.11,2401.17,2409.23,2417.28,2425.34,2433.4,2441.46,2449.52,2457.58,2465.63,2473.69,2481.75],"beta":[0.00084,0.00084,0.00084,0.00084,0.00084,0.00084,0.00084,0.00084,0.00084,0.00084,0.00084,0.00084,0.00084,0.00084,0.00084,0.00084,0.00084,0.00084,0.00084,0.00084,0.00084,0.00084,0.00084,0.00084,0.00084,0.00084,0.00084,0.00084,0.00084,0.00084,0.00084,0.00084,0.00084,0.00084,0.00084,0.00084,0.00084,0.00084,0.00084,0.00084,0.00084,0.00084,0.00084,0.00084,0.00084,0.00084,0.00084,0.00084,0.00084,0.00084,0.00084]}},{"key":"NE","name":"Natural ester","recipe":"NatureCool 1000","fam":"nat","flash":325.0,"pour":-21.0,"dk":2.37,"dk_w":2.44,"biodeg":1.0,"biobased":1.0,"cost":4.0,"mu50":0.020642581146289092,"fom1_50":42.37176445076422,"mineral":0.0,"ox":1.0,"w20":220.0,"tab":{"rho":[933.857,932.531,931.205,929.88,928.554,927.228,925.903,924.577,923.251,921.926,920.6,919.274,917.949,916.623,915.297,913.972,912.646,911.32,909.995,908.669,907.343,906.018,904.692,903.366,902.041,900.715,899.389,898.064,896.738,895.412,894.087,892.761,891.435,890.11,888.784,887.458,886.133,884.807,883.481,882.156,880.83,879.504,878.179,876.853,875.527,874.202,872.876,871.55,870.225,868.899,867.573],"nu":[0.000161555,0.000145523,0.000131453,0.000119066,0.00010813,9.84472e-05,8.98511e-05,8.21993e-05,7.53708e-05,6.92619e-05,6.37836e-05,5.88594e-05,5.44234e-05,5.04184e-05,4.67949e-05,4.35098e-05,4.05256e-05,3.78096e-05,3.53329e-05,3.30704e-05,3.1e-05,2.9102e-05,2.73593e-05,2.57565e-05,2.42801e-05,2.2918e-05,2.16595e-05,2.04952e-05,1.94163e-05,1.84153e-05,1.74854e-05,1.66203e-05,1.58146e-05,1.50632e-05,1.43616e-05,1.37059e-05,1.30922e-05,1.25173e-05,1.19782e-05,1.1472e-05,1.09963e-05,1.05489e-05,1.01275e-05,9.73043e-06,9.35582e-06,9.00211e-06,8.66784e-06,8.35168e-06,8.05239e-06,7.76884e-06,7.5e-06],"k":[0.166339,0.166145,0.165952,0.165758,0.165564,0.16537,0.165176,0.164982,0.164788,0.164594,0.1644,0.164206,0.164012,0.163818,0.163624,0.16343,0.163236,0.163042,0.162848,0.162655,0.162461,0.162267,0.162073,0.161879,0.161685,0.161491,0.161297,0.161103,0.160909,0.160715,0.160521,0.160327,0.160133,0.159939,0.159745,0.159552,0.159358,0.159164,0.15897,0.158776,0.158582,0.158388,0.158194,0.158,0.157806,0.157612,0.157418,0.157224,0.15703,0.156836,0.156642],"cp":[2065.85,2073.91,2081.97,2090.02,2098.08,2106.14,2114.2,2122.26,2130.32,2138.38,2146.43,2154.49,2162.55,2170.61,2178.67,2186.72,2194.78,2202.84,2210.9,2218.96,2227.02,2235.07,2243.13,2251.19,2259.25,2267.31,2275.37,2283.42,2291.48,2299.54,2307.6,2315.66,2323.72,2331.78,2339.83,2347.89,2355.95,2364.01,2372.07,2380.12,2388.18,2396.24,2404.3,2412.36,2420.42,2428.47,2436.53,2444.59,2452.65,2460.71,2468.77],"beta":[0.00072,0.00072,0.00072,0.00072,0.00072,0.00072,0.00072,0.00072,0.00072,0.00072,0.00072,0.00072,0.00072,0.00072,0.00072,0.00072,0.00072,0.00072,0.00072,0.00072,0.00072,0.00072,0.00072,0.00072,0.00072,0.00072,0.00072,0.00072,0.00072,0.00072,0.00072,0.00072,0.00072,0.00072,0.00072,0.00072,0.00072,0.00072,0.00072,0.00072,0.00072,0.00072,0.00072,0.00072,0.00072,0.00072,0.00072,0.00072,0.00072,0.00072,0.00072]}},{"key":"MO","name":"Mineral oil","recipe":"HyVolt II","fam":"min","flash":156.0,"pour":-50.0,"dk":2.2,"dk_w":2.2,"biodeg":0.0,"biobased":0.0,"cost":2.0,"mu50":0.005916488508671676,"fom1_50":47.090788373144385,"mineral":1.0,"ox":0.0,"w20":11.0,"tab":{"rho":[889.24,888.008,886.776,885.544,884.312,883.08,881.848,880.616,879.384,878.152,876.92,875.688,874.456,873.224,871.992,870.76,869.528,868.296,867.064,865.832,864.6,863.368,862.136,860.904,859.672,858.44,857.208,855.976,854.744,853.512,852.28,851.048,849.816,848.584,847.352,846.12,844.888,843.656,842.424,841.192,839.96,838.728,837.496,836.264,835.032,833.8,832.568,831.336,830.104,828.872,827.64],"nu":[5.42704e-05,4.82129e-05,4.30066e-05,3.85122e-05,3.4616e-05,3.12246e-05,2.82613e-05,2.56623e-05,2.33747e-05,2.13543e-05,1.9564e-05,1.79725e-05,1.65534e-05,1.52844e-05,1.41463e-05,1.3123e-05,1.22003e-05,1.13664e-05,1.06108e-05,9.92458e-06,9.3e-06,8.73026e-06,8.20947e-06,7.73244e-06,7.29466e-06,6.89214e-06,6.52136e-06,6.17923e-06,5.86299e-06,5.5702e-06,5.2987e-06,5.04655e-06,4.81203e-06,4.59358e-06,4.38984e-06,4.19955e-06,4.02159e-06,3.85495e-06,3.69873e-06,3.5521e-06,3.41431e-06,3.28469e-06,3.16262e-06,3.04755e-06,2.93895e-06,2.83637e-06,2.73938e-06,2.64759e-06,2.56064e-06,2.47821e-06,2.4e-06],"k":[0.133879,0.133685,0.133491,0.133297,0.133103,0.132909,0.132715,0.132521,0.132327,0.132133,0.131939,0.131745,0.131552,0.131358,0.131164,0.13097,0.130776,0.130582,0.130388,0.130194,0.13,0.129806,0.129612,0.129418,0.129224,0.12903,0.128836,0.128642,0.128448,0.128255,0.128061,0.127867,0.127673,0.127479,0.127285,0.127091,0.126897,0.126703,0.126509,0.126315,0.126121,0.125927,0.125733,0.125539,0.125345,0.125152,0.124958,0.124764,0.12457,0.124376,0.124182],"cp":[1698.83,1706.89,1714.95,1723.01,1731.07,1739.12,1747.18,1755.24,1763.3,1771.36,1779.42,1787.48,1795.53,1803.59,1811.65,1819.71,1827.77,1835.83,1843.88,1851.94,1860.0,1868.06,1876.12,1884.18,1892.23,1900.29,1908.35,1916.41,1924.47,1932.53,1940.58,1948.64,1956.7,1964.76,1972.82,1980.88,1988.93,1996.99,2005.05,2013.11,2021.17,2029.23,2037.28,2045.34,2053.4,2061.46,2069.52,2077.57,2085.63,2093.69,2101.75],"beta":[0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007]}}]};
+const DEFAULTS = {q:1000,gap:1.5,flow:6,tmax:70,er:3.5,mw:1,tin:40,dt:10,price:0.163,flash:"150",dk:"worst",bio:"0",goal:"balanced"};
+const FMT = {q:v=>`${v} W`,gap:v=>`${(+v).toFixed(1)} mm`,flow:v=>`${(+v).toFixed(1)} L/min`,tmax:v=>`${v} °C`,er:v=>(+v).toFixed(1),mw:v=>`${(+v).toFixed(1)} MW`,tin:v=>`${v} °C`,dt:v=>`${v} K`,price:v=>`$${(+v).toFixed(3)}/kWh`};
+const $=id=>document.getElementById(id);
+let S = {...DEFAULTS};
+try { const s = JSON.parse(localStorage.getItem("tf-selector") || "null"); if (s) S = {...DEFAULTS, ...s}; } catch (e) {}
+function save(){ try { localStorage.setItem("tf-selector", JSON.stringify(S)); } catch (e) {} }
+function syncUI(){
+  for (const k of Object.keys(FMT)) { $(k).value = S[k]; $(k+"_o").textContent = FMT[k](S[k]); }
+  document.querySelectorAll(".seg").forEach(g => g.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.v === String(S[g.dataset.name])))));
+}
+const f0=(x,d=0)=>Number(x).toFixed(d);
+const money=x=>(x<0?"−":"+")+"$"+Math.abs(Math.round(x)).toLocaleString("en-US");
+const pill=(st,t)=>`<span class="pill ${st}">${t}</span>`;
+
+function evaluateAll(){
+  const hs = TF.sink({W:0.09,L:0.09,H:0.03,t:0.0006,b:S.gap/1000,kfin:390,eta:0.35});
+  const lp = {Q:S.mw*1e6,Tsup:+S.tin,dT:+S.dt,waterKgS:30*(10/S.dt),pipeD:0.15,pipeL:60,kMinor:12,etaPump:0.65,rough:4.5e-5};
+  const rows = DATA.fluids.map(fl => {
+    const hsr = TF.forced(fl, DATA.T, S.flow/60000, hs, +S.q, +S.tin);
+    const loop = TF.loop(fl, DATA.T, lp);
+    const pumpUsd = loop.pumpKw * 8760 * S.price;
+    const dk = S.dk === "worst" ? fl.dk_w : fl.dk;
+    const z = TF.traceZ(dk, +S.er, 50);
+    const checks = {
+      thermal: hsr.Tb <= S.tmax,
+      dk: dk <= 2.3,
+      flash: fl.flash >= +S.flash,
+      pour: fl.pour == null ? null : fl.pour < -30,
+      visc: fl.mu50 < 0.015,
+      mineral: fl.mineral < 0.01,
+      bio: fl.biodeg >= +S.bio - 1e-9,
+      trace: Math.abs(z/50-1) <= 0.10,
+    };
+    const fails = Object.entries(checks).filter(([k,v]) => v === false).map(([k]) => k);
+    return {fl, hsr, loop, pumpUsd, dk, z, checks, fails, ok: fails.length === 0, qmax: (S.tmax - S.tin)/hsr.R};
+  });
+  const bench = rows.find(r => r.fl.key === "bench");
+  rows.forEach(r => { r.dT = r.hsr.Tb - bench.hsr.Tb; r.dUsd = r.pumpUsd - bench.pumpUsd; });
+  const span = (a,b)=> (b-a)||1;
+  const tMin = Math.min(...rows.map(r=>r.hsr.Tb)), tMax = Math.max(...rows.map(r=>r.hsr.Tb));
+  const pMin = Math.min(...rows.map(r=>r.pumpUsd)), pMax = Math.max(...rows.map(r=>r.pumpUsd));
+  rows.forEach(r => {
+    const nt = (r.hsr.Tb - tMin)/span(tMin,tMax), np = (r.pumpUsd - pMin)/span(pMin,pMax);
+    r.score = S.goal === "cool" ? nt : S.goal === "pump" ? np : 0.5*nt + 0.5*np;
+  });
+  rows.sort((a,b) => (a.ok === b.ok ? a.score - b.score : (a.ok ? -1 : 1)));
+  return {rows, bench, ok: rows.filter(r => r.ok)};
+}
+
+const LABEL = {thermal:"too hot", dk:"Dk over 2.3", flash:"flash below class", pour:"pour above −30 °C", visc:"too viscous at 50 °C", mineral:"mineral oil (OCP: avoid)", bio:"not biodegradable enough", trace:"trace outside ±10%"};
+
+function render(){
+  const {rows, bench, ok} = evaluateAll();
+  const best = ok[0];
+  if (!best) {
+    $("rec").innerHTML = `<div class="none"><b>No fluid meets all your requirements.</b> The usual blockers are a 210 °C flash class combined with a 100% biodegradable requirement, or a heat-sink limit below what your flow allows. Relax one requirement, or ask ChemeNova to formulate for your case.</div>`;
+  } else {
+    const why = [];
+    if (best.dT < -0.05) why.push(`Runs the heat-sink base ${f0(-best.dT,2)} °C cooler than the PAO benchmark in your hardware.`);
+    else if (best.dT > 0.05) why.push(`Runs ${f0(best.dT,2)} °C warmer than the PAO benchmark, still within your ${S.tmax} °C limit.`);
+    if (best.dUsd < -50) why.push(`Cuts loop pumping by ${money(-best.dUsd).replace("+","")} a year across your ${f0(S.mw,1)} MW.`);
+    else if (best.dUsd > 50) why.push(`Costs ${money(best.dUsd).replace("+","")} a year more in pumping than the benchmark.`);
+    why.push(`Passes OCP checks with Dk ${f0(best.dk,2)} (${S.dk === "worst" ? "worst case" : "central estimate"}) and a modeled flash of ${f0(best.fl.flash)} °C.`);
+    if (best.fl.biodeg > 0.99) why.push("100% readily biodegradable and PFAS-free.");
+    else why.push(`PFAS-free; ${f0(best.fl.biodeg*100)}% readily biodegradable.`);
+    const others = ok.slice(1,3).map(r => r.fl.name).join(" and ");
+    $("rec").innerHTML = `<article class="rec"><div class="tag">Best fit for your inputs</div><h2>${best.fl.name}</h2><div class="rx">${best.fl.recipe}</div>
+      <div class="kpis">
+        <div class="kpi"><span class="v">${f0(best.hsr.Tb,1)} °C</span><span class="l">heat-sink base at ${S.q} W</span></div>
+        <div class="kpi"><span class="v">${f0(best.qmax)} W</span><span class="l">max chip power at ${S.tmax} °C</span></div>
+        <div class="kpi"><span class="v">${f0(best.loop.pumpKw,1)} kW</span><span class="l">loop pumping, ${f0(S.mw,1)} MW</span></div>
+        <div class="kpi"><span class="v">${f0(best.z,1)} Ω</span><span class="l">50 Ω outer trace, immersed</span></div>
+      </div>
+      <ul class="why">${why.map(w=>`<li>${w}</li>`).join("")}</ul>
+      ${others ? `<p class="hint">Also fits: ${others}.</p>` : ""}</article>`;
+  }
+  const tMax = Math.max(...rows.map(r=>Math.abs(r.dT))) || 1;
+  const pMax = Math.max(...rows.map(r=>r.pumpUsd)) || 1;
+  $("tbl").innerHTML = `<thead><tr><th>Fluid</th><th style="text-align:right">Base temp vs PAO</th><th style="text-align:right">Max chip W</th><th style="text-align:right">Pumping $/yr</th><th style="text-align:right">vs PAO</th><th style="text-align:right">Trace Ω</th><th>Checks</th></tr></thead><tbody>`+
+    rows.map(r => {
+      const isBest = best && r === best;
+      const chk = r.ok ? pill("ok","all pass") : r.fails.map(k => pill("no", LABEL[k])).join("");
+      const pourNote = r.checks.pour === null ? pill("edge","pour not on datasheet") : "";
+      const tw = Math.abs(r.dT)/tMax*60, pw = r.pumpUsd/pMax*70;
+      return `<tr class="${r.ok?"":"out"}"><td class="name"><b>${r.fl.name}</b><small>${r.fl.recipe}</small></td>
+        <td class="num"><div class="bar"><span>${r.fl.key==="bench"?"baseline":(r.dT>0?"+":"−")+f0(Math.abs(r.dT),2)+" °C"}</span><i class="${isBest?"acc":""}" style="width:${Math.max(tw,2)}px"></i></div></td>
+        <td class="num">${f0(r.qmax)}</td>
+        <td class="num"><div class="bar"><span>$${Math.round(r.pumpUsd).toLocaleString("en-US")}</span><i class="${isBest?"acc":""}" style="width:${Math.max(pw,2)}px"></i></div></td>
+        <td class="num">${r.fl.key==="bench"?"—":money(r.dUsd)}</td>
+        <td class="num">${f0(r.z,1)}</td>
+        <td>${chk}${pourNote}</td></tr>`;
+    }).join("") + `</tbody>`;
+}
+
+document.querySelectorAll("input[type=range]").forEach(el => el.addEventListener("input", () => { S[el.id] = +el.value; $(el.id+"_o").textContent = FMT[el.id](el.value); save(); render(); }));
+document.querySelectorAll(".seg").forEach(g => g.addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; S[g.dataset.name] = b.dataset.v; syncUI(); save(); render(); }));
+$("reset").addEventListener("click", () => { S = {...DEFAULTS}; syncUI(); save(); render(); });
+syncUI(); render();
+</script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+{
+ "cv": {
+  "new_family | prior: class + usage": {
+   "auc": 0.722,
+   "acc": 0.659,
+   "brier": 0.209
+  },
+  "new_family | + maker, cure, process flags": {
+   "auc": 0.759,
+   "acc": 0.689,
+   "brier": 0.197
+  },
+  "new_family | + name text (char n-grams)": {
+   "auc": 0.811,
+   "acc": 0.738,
+   "brier": 0.177
+  },
+  "new_brand | prior: class + usage": {
+   "auc": 0.687,
+   "acc": 0.638,
+   "brier": 0.22
+  },
+  "new_brand | + maker, cure, process flags": {
+   "auc": 0.709,
+   "acc": 0.653,
+   "brier": 0.215
+  },
+  "new_brand | + name text (char n-grams)": {
+   "auc": 0.736,
+   "acc": 0.672,
+   "brier": 0.208
+  }
+ },
+ "triage": [
+  {
+   "test_top_share": 1.0,
+   "pass_rate": 0.459,
+   "tests_per_pass": 2.18,
+   "share_of_all_passes_kept": 1.0
+  },
+  {
+   "test_top_share": 0.5,
+   "pass_rate": 0.691,
+   "tests_per_pass": 1.45,
+   "share_of_all_passes_kept": 0.752
+  },
+  {
+   "test_top_share": 0.3,
+   "pass_rate": 0.794,
+   "tests_per_pass": 1.26,
+   "share_of_all_passes_kept": 0.519
+  },
+  {
+   "test_top_share": 0.2,
+   "pass_rate": 0.85,
+   "tests_per_pass": 1.18,
+   "share_of_all_passes_kept": 0.37
+  },
+  {
+   "test_top_share": 0.1,
+   "pass_rate": 0.905,
+   "tests_per_pass": 1.1,
+   "share_of_all_passes_kept": 0.197
+  }
+ ],
+ "calibration": [
+  {
+   "dec": 0,
+   "pred": 0.068,
+   "obs": 0.075,
+   "n": 1285
+  },
+  {
+   "dec": 1,
+   "pred": 0.159,
+   "obs": 0.177,
+   "n": 1284
+  },
+  {
+   "dec": 2,
+   "pred": 0.24,
+   "obs": 0.195,
+   "n": 1284
+  },
+  {
+   "dec": 3,
+   "pred": 0.318,
+   "obs": 0.283,
+   "n": 1284
+  },
+  {
+   "dec": 4,
+   "pred": 0.398,
+   "obs": 0.407,
+   "n": 1284
+  },
+  {
+   "dec": 5,
+   "pred": 0.48,
+   "obs": 0.47,
+   "n": 1284
+  },
+  {
+   "dec": 6,
+   "pred": 0.567,
+   "obs": 0.604,
+   "n": 1284
+  },
+  {
+   "dec": 7,
+   "pred": 0.665,
+   "obs": 0.68,
+   "n": 1284
+  },
+  {
+   "dec": 8,
+   "pred": 0.778,
+   "obs": 0.796,
+   "n": 1284
+  },
+  {
+   "dec": 9,
+   "pred": 0.909,
+   "obs": 0.905,
+   "n": 1285
+  }
+ ],
+ "water_corrected": {
+  "pass_tml_minus_wvr": 0.57,
+  "pass_standard_same_rows": 0.478,
+  "nylon_standard": 0.059,
+  "nylon_water_corrected": 0.436
+ }
+}

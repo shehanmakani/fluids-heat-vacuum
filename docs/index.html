@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="ThermalForm PFAS-free immersion cooling fluids and OrbitChem space-chemistry research by Shehan Makani, ChemeNova: models, validation and results.">
+<meta property="og:title" content="Fluids for Heat and Vacuum">
+<meta property="og:description" content="PFAS-free immersion cooling fluids for AI data centers, and outgassing and lubricant chemistry for spacecraft.">
+<title>Fluids for Heat and Vacuum</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: research portfolio. Hero with a temperature-axis thesis graphic (where each project lives, -60 to 140 C),
+   then two project chapters (gold = ThermalForm / data centers, teal = OrbitChem / space), methods, links. Single 980px column. */
+:root{
+  --ink:#10201e; --muted:#54625f; --faint:#8a9794; --line:#d8e0de; --bg:#f6f8f7; --surface:#ffffff; --tint:#edf3f1;
+  --teal:#00897a; --teal-ink:#006b60; --teal-soft:#d6ece8;
+  --gold:#b5801f; --gold-ink:#8a5f12; --gold-soft:#f4e8cf;
+  --ref:#8d9996;
+  --display:"Syne",ui-sans-serif,system-ui,sans-serif;
+  --body:"DM Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"DM Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --ink:#e3eeec; --muted:#9fb1ae; --faint:#71817e; --line:#263735; --bg:#0d1716; --surface:#13201f; --tint:#182927;
+  --teal:#2ea597; --teal-ink:#5cc9bb; --teal-soft:#153936;
+  --gold:#b5822c; --gold-ink:#dcae5c; --gold-soft:#36291a;
+  --ref:#6d7d7a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --ink:#e3eeec; --muted:#9fb1ae; --faint:#71817e; --line:#263735; --bg:#0d1716; --surface:#13201f; --tint:#182927;
+  --teal:#2ea597; --teal-ink:#5cc9bb; --teal-soft:#153936;
+  --gold:#b5822c; --gold-ink:#dcae5c; --gold-soft:#36291a;
+  --ref:#6d7d7a; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:16px/1.6 var(--body);margin:0}
+.wrap{max-width:980px;margin:0 auto;padding-block:40px 72px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:64px}
+a{color:inherit}
+a:focus-visible{outline:2px solid var(--teal);outline-offset:3px;border-radius:4px}
+.eyebrow{font:500 12px/1.3 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0}
+h1{font-weight:800;font-size:clamp(38px,6.4vw,68px);line-height:.98;letter-spacing:-.02em}
+h2{font-weight:700;font-size:clamp(28px,4vw,40px);line-height:1.05;letter-spacing:-.01em}
+h3{font-weight:700;font-size:20px;line-height:1.2}
+p{margin:0;max-width:66ch}
+.lede{font-size:clamp(17px,2.2vw,20px);color:var(--muted);max-width:60ch}
+header{display:grid;gap:18px}
+.byline{display:flex;flex-wrap:wrap;gap:6px 18px;font:400 13px var(--mono);color:var(--muted)}
+.thesis{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 18px 10px;display:grid;gap:6px}
+.thesis .cap{font-size:13px;color:var(--muted)}
+.chart{overflow-x:auto}
+.chart svg{display:block;width:100%;height:auto;min-width:560px}
+.chart text{font-family:var(--mono);font-size:11px;fill:var(--muted)}
+.chart .lab{fill:var(--ink);font-family:var(--body);font-size:12.5px}
+.chart .lab-b{fill:var(--ink);font-family:var(--body);font-size:12.5px;font-weight:600}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.fact{border-top:2px solid var(--ink);padding-top:10px;display:grid;gap:4px}
+.fact b{font:500 26px/1.1 var(--mono);font-variant-numeric:tabular-nums}
+.fact span{font-size:13.5px;color:var(--muted)}
+section{display:grid;gap:22px}
+.chapter-head{display:grid;gap:10px;padding-top:22px;border-top:1px solid var(--line)}
+.tag{display:inline-flex;align-items:center;gap:8px;font:500 12px var(--mono);letter-spacing:.1em;text-transform:uppercase}
+.tag i{width:10px;height:10px;border-radius:2px;display:inline-block}
+.gold .tag{color:var(--gold-ink)} .gold .tag i{background:var(--gold)}
+.teal .tag{color:var(--teal-ink)} .teal .tag i{background:var(--teal)}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+@media (max-width:760px){.two{grid-template-columns:1fr}}
+.block{display:grid;gap:10px;align-content:start;min-width:0}
+ul.clean{margin:0;padding-left:18px;display:grid;gap:6px}
+ul.clean li{max-width:62ch}
+.k{font-family:var(--mono);font-size:.92em}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:grid;gap:12px;min-width:0}
+.panel h3{font-size:17px}
+.panel .note{font-size:13px;color:var(--muted)}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:600px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:500 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right}
+th.n{text-align:right}
+td small{display:block;color:var(--muted);font-size:12.5px}
+.insight{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media (max-width:760px){.insight{grid-template-columns:1fr}}
+.insight div{display:grid;gap:6px;align-content:start;min-width:0}
+.insight b{font-family:var(--display);font-size:16px;line-height:1.25}
+.insight p{font-size:14.5px;color:var(--muted)}
+.rule{background:var(--teal-soft);border-radius:14px;padding:18px;display:grid;gap:8px}
+.rule .f{font:500 clamp(15px,2.4vw,19px)/1.4 var(--mono);color:var(--ink)}
+.rule p{font-size:14.5px}
+.links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:640px){.links{grid-template-columns:1fr}}
+.links a{display:grid;gap:4px;text-decoration:none;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;transition:border-color .15s}
+.links a:hover{border-color:var(--ink)}
+.links a b{font-family:var(--display);font-size:16px}
+.links a span{font-size:13.5px;color:var(--muted)}
+.links a em{font:500 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;font-style:normal}
+.links a.g em{color:var(--gold-ink)} .links a.t em{color:var(--teal-ink)}
+.stack{display:flex;flex-wrap:wrap;gap:8px}
+.stack span{font:400 12.5px var(--mono);border:1px solid var(--line);border-radius:999px;padding:5px 10px;background:var(--surface)}
+footer{font-size:13px;color:var(--muted);display:grid;gap:8px;border-top:1px solid var(--line);padding-top:18px}
+footer p{max-width:90ch}
+@media (prefers-reduced-motion:no-preference){.links a{transition:border-color .15s}}
+.cta{background:var(--ink);color:var(--bg);border-radius:16px}
+.cta-in{padding:28px 24px;display:grid;gap:12px}
+.cta .eyebrow{color:var(--teal-soft)}
+.cta p{color:var(--bg);opacity:.85}
+.cta-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
+.btn{font:600 14px var(--body);text-decoration:none;padding:10px 16px;border-radius:999px;background:var(--teal);color:#fff}
+.btn.ghost{background:transparent;border:1px solid var(--bg);color:var(--bg)}
+.btn:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Research portfolio · ChemeNova · October 2026</div>
+    <h1>Fluids for heat and vacuum</h1>
+    <p class="lede">Two research builds on ChemeNova's IntelliForm and OrbitChem platforms. One designs PFAS-free immersion cooling fluids for AI data centers. The other maps where space chemistry has a real, open gap, then models it from the molecule up.</p>
+    <div class="byline"><span>Shehan Makani, founder and CEO, ChemeNova</span><a href="https://github.com/shehanmakani">github.com/shehanmakani</a></div>
+    <figure class="thesis" style="margin:0">
+      <div class="chart" id="thesis" role="img" aria-label="Temperature axis from minus 60 to 140 degrees Celsius showing where each project operates"></div>
+      <figcaption class="cap">Both projects are the same problem at different temperatures: predict how a fluid's viscosity, volatility and heat transfer change with temperature, then design the blend.</figcaption>
+    </figure>
+    <div class="facts">
+      <div class="fact"><b>10</b><span>immersion fluids screened against the OCP specification</span></div>
+      <div class="fact"><b>12,842</b><span>NASA outgassing tests analyzed</span></div>
+      <div class="fact"><b>0.81</b><span>AUC predicting test pass or fail on products never seen</span></div>
+      <div class="fact"><b>×2.5</b><span>worst miss of the physics model across five fluids, with no fitting</span></div>
+    </div>
+  </header>
+
+  <!-- ================= THERMALFORM ================= -->
+  <section class="gold" id="thermalform">
+    <div class="chapter-head">
+      <span class="tag"><i></i>Project 1 · AI infrastructure</span>
+      <h2>ThermalForm: PFAS-free immersion cooling fluids</h2>
+      <p class="lede">AI racks now run hot enough that servers are submerged in dielectric fluid. The best-known fluids are fluorinated, and PFAS rules are closing in. ThermalForm uses IntelliForm to design non-fluorinated blends that meet the Open Compute Project (OCP) immersion-fluid specification and cool better than the PAO benchmark.</p>
+    </div>
+
+    <div class="two">
+      <div class="block">
+        <h3>What I built</h3>
+        <ul class="clean">
+          <li>Blend property models from published data sheets: viscosity (Refutas, Walther), flash point, thermal conductivity, heat capacity and permittivity.</li>
+          <li>Heat-sink physics for a 1 kW chip: laminar developing flow in plate fins, fin efficiency and pressure drop.</li>
+          <li>A 1 MW facility loop: plate heat exchanger, piping and pump energy.</li>
+          <li>Signal integrity: how a fluid shifts a 50 Ω trace's impedance.</li>
+          <li>Multi-objective optimization (NSGA-II) under OCP limits, with Monte Carlo on the uncertain inputs.</li>
+          <li>A browser fluid selector that reproduces the Python models to within 0.01%.</li>
+        </ul>
+      </div>
+      <div class="block">
+        <h3>Findings that changed the design</h3>
+        <ul class="clean">
+          <li><b>The bottleneck is a dielectric number.</b> OCP caps permittivity at 2.3 up to 40 GHz. Ester permittivity at those frequencies is unpublished, so it decides how much ester a blend can carry. The all-ester blend from round 2 passes in only about 5% of simulated cases.</li>
+          <li><b>Pumping is not negligible.</b> At facility scale it is about 2% of IT power, roughly $20,000–34,000 per MW a year at New Jersey prices. Round 3 corrected round 2 on this.</li>
+          <li><b>The flow is laminar.</b> Conductivity and heat capacity matter more than viscosity at the chip, which overturns the usual turbulent figure of merit.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>Round 3 lead blends against the PAO benchmark</h3>
+      <div class="tbl"><table>
+        <thead><tr><th>Lead</th><th>Recipe</th><th class="n">Chip-side ΔT</th><th class="n">Pumping, $/MW·yr</th><th class="n">Worst-case Dk</th><th class="n">Flash °C</th><th>Edge</th></tr></thead>
+        <tbody>
+          <tr><td><b>A</b><small>all-round</small></td><td>PAO 4 40% + Priolube 1976 35% + PAO 2 25%</td><td class="n">−0.39 °C</td><td class="n">−3,100</td><td class="n">2.28</td><td class="n">186</td><td>Cooler in 97% of Monte Carlo draws</td></tr>
+          <tr><td><b>G</b><small>biodegradable</small></td><td>Renewable isoparaffin 62% + Priolube 1976 38%</td><td class="n">−0.25 °C</td><td class="n">−5,500</td><td class="n">2.29</td><td class="n">170</td><td>100% readily biodegradable</td></tr>
+          <tr><td><b>P</b><small>premium flash</small></td><td>PAO 4 81% + EF 7010 19%</td><td class="n">−0.28 °C</td><td class="n">about par</td><td class="n">2.22</td><td class="n">216</td><td>Meets a 210 °C flash class</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">Benchmark: PAO 4 88% + PAO 2 12%. Model check: PAO 4's OCP figure of merit at 50 °C comes out at 45.4 against Evonik's published 46. Flash points are model values; prices are placeholders pending supplier quotes.</p>
+    </div>
+  </section>
+
+  <!-- ================= SPACE ================= -->
+  <section class="teal" id="space">
+    <div class="chapter-head">
+      <span class="tag"><i></i>Project 2 · Spacecraft materials</span>
+      <h2>Space chemistry with OrbitChem</h2>
+      <p class="lede">I scanned eight space-chemistry niches for a gap ChemeNova could own, re-ranked them for how crowded each story is, and went deep on the two that share one science: how molecules behave in vacuum.</p>
+    </div>
+
+    <div class="insight">
+      <div><b>Eight niches scored</b><p>Market pull, timing, fit, capital, qualification burden and competition. Lubricants and low-outgassing materials led at 35 and 34 out of 45.</p></div>
+      <div><b>Then re-ranked for crowding</b><p>PFAS-free is a crowded story; outgassing prediction is quiet. With crowding scored, outgassing moved to first (39 of 50) and lubricants to second (37).</p></div>
+      <div><b>One engine for both</b><p>Lubricant life and the outgassing test both come down to vapor pressure and molar mass, which OrbitChem already predicts.</p></div>
+    </div>
+
+    <div class="two">
+      <div class="panel">
+        <h3>The PFAS-free lubricant gap</h3>
+        <div class="chart" id="windows" role="img" aria-label="Usable vacuum temperature window for four lubricant base oils"></div>
+        <p class="note">Cold end: viscosity reaches 10,000 cSt. Hot end: evaporation removes 5 mg/cm² over 15 years. The best PFAS-free oil beats PFPE when hot and falls 16 °C short when cold. That defines the OrbitChem target: ≤ 10,000 cSt at −40 °C and ≤ 1×10⁻¹¹ Pa at 25 °C.</p>
+      </div>
+      <div class="panel">
+        <h3>What 12,842 NASA tests say</h3>
+        <div class="chart" id="classes" role="img" aria-label="ASTM E595 pass rate by material class"></div>
+        <p class="note">Only 46% of tested materials pass (TML ≤ 1.0%, CVCM ≤ 0.10%). 37% of failures are near misses, and devolatilized versions pass 69% of the time against 45% for the rest.</p>
+      </div>
+    </div>
+
+    <div class="two">
+      <div class="block">
+        <h3>A model that screens before the lab</h3>
+        <p>Trained on what a buyer knows before testing (material class, usage, maker, cure and the product name) and always scored on product families it had never seen.</p>
+        <ul class="clean">
+          <li>AUC 0.81 and 74% accuracy on unseen families; 0.74 on unseen brands.</li>
+          <li>The test itself agrees with repeat tests only 86% of the time, so that is the ceiling.</li>
+          <li>Sending only the model's top 30% to the lab lifts the pass rate from 46% to 79%.</li>
+          <li>The public data stops at 74% because it records trade names, not recipes. Composition is the missing input, and a formulator has it.</li>
+        </ul>
+      </div>
+      <div class="block">
+        <h3>A physics model of the test itself</h3>
+        <p>The ASTM E595 test cell is an effusion cell: vapor leaves through a 6.3 mm port toward a collector at 25 °C. From each component's vapor-pressure curve and molar mass, the simulator integrates 24 hours at 125 °C.</p>
+        <ul class="clean">
+          <li>Mass loss lands within 2.5× of NASA's measurements across a more than 100,000-fold range of volatility, with nothing fitted.</li>
+          <li>Condensables match three of five fluids and run high on the other two, so the model errs on the safe side.</li>
+          <li>NASA's PFAS-free silahydrocarbon and the OrbitChem target oil are both predicted to pass with 3–11× margin.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>Physics model against NASA measurements</h3>
+      <div class="chart" id="valid" role="img" aria-label="Predicted versus measured total mass loss on log scales for five fluids"></div>
+      <p class="note">Shaded band: within 2.5× of measured. Measured values are NASA medians. The polyphenyl ether uses Santovac 5 vapor-pressure data; NASA's entry is the related Convalex-10.</p>
+    </div>
+
+    <div class="rule">
+      <span class="eyebrow">Design rule for a single low-volatility fluid · 125 °C · 24 h</span>
+      <div class="f">P<sub>125 °C</sub> × √M &lt; 2.3×10⁻⁵ Pa·(kg/mol)<sup>½</sup> to pass CVCM ≤ 0.10%</div>
+      <p>For a 900 g/mol oil that means vapor pressure under about 2.4×10⁻⁵ Pa at 125 °C. Pennzane sits about 9× above the line, matching its mixed test record; PFPE sits about 5× below. This turns a three-day qualification test into a target OrbitChem can design against.</p>
+    </div>
+
+    <div class="block">
+      <h3>Where it leads as a business</h3>
+      <p>Outgassing pass engineering: screen a material before the three-day test, trace a failure to the volatile component, and fix it by devolatilization, post-cure or reformulation. Buyers are material suppliers seeking space qualification and NewSpace teams building with commercial materials. PFAS-free lubricants stay as the hard flagship application of the same engine, funded first through NASA SBIR and AFRL programs.</p>
+    </div>
+  </section>
+
+  <!-- ================= METHODS + LINKS ================= -->
+  <section id="methods">
+    <div class="chapter-head">
+      <span class="tag" style="color:var(--muted)">Methods and tools</span>
+      <h2>How it was built</h2>
+    </div>
+    <div class="stack">
+      <span>Python</span><span>NumPy · SciPy</span><span>pandas</span><span>scikit-learn</span><span>pymoo NSGA-II</span><span>Monte Carlo</span><span>JavaScript</span><span>Playwright</span><span>Walther · Refutas · Filippov</span><span>Hertz–Knudsen · Clausius–Clapeyron</span><span>VDI plate heat exchanger</span><span>Hammerstad–Jensen microstrip</span><span>ASTM E595 · OCP immersion spec</span>
+    </div>
+    <p>Every input carries its source and basis, and every model was checked against something published before it was trusted: Evonik's figure of merit, measured viscosities for EC-120, NASA bearing and vapor-pressure reports, and the NASA Goddard outgassing database. Where data was missing, the work says so and names the measurement that would close it.</p>
+    <div class="links">
+      <a class="g" href="selector.html"><em>ThermalForm · live tool</em><b>Fluid Selector</b><span>Enter chip, heat-sink and facility inputs; see which fluids pass OCP and what they save.</span></a>
+      <a class="g" href="https://github.com/shehanmakani/fluids-heat-vacuum/blob/main/reports/thermalform-technical-report.md"><em>ThermalForm · report</em><b>Technical report</b><span>Property models, heat-sink and loop physics, OCP design, Monte Carlo and validation.</span></a>
+      <a class="t" href="https://github.com/shehanmakani/fluids-heat-vacuum/blob/main/reports/space-chemistry-technical-report.md"><em>OrbitChem · report</em><b>Space chemistry report</b><span>Niche scan, lubricant window model, NASA outgassing analysis and the E595 simulator.</span></a>
+      <a class="t" href="https://github.com/shehanmakani/fluids-heat-vacuum"><em>Code and data</em><b>GitHub repository</b><span>Analysis code, NASA data and every result in this page, reproducible.</span></a>
+    </div>
+  </section>
+
+
+  <section class="cta" id="orbitchem">
+    <div class="cta-in">
+      <span class="eyebrow">From ChemeNova</span>
+      <h2>OrbitChem: molecular design for space</h2>
+      <p>The vacuum-volatility models on this page feed OrbitChem, ChemeNova's platform for designing space-grade fluids and materials. See what it does and how to work with us.</p>
+      <div class="cta-row"><a class="btn" href="https://chemenova.com/orbitchem">Explore OrbitChem</a><a class="btn ghost" href="https://chemenova.com">ChemeNova</a></div>
+    </div>
+  </section>
+
+  <footer>
+    <p><b>What comes next.</b> Lab measurements of ester permittivity at 20–40 GHz and closed-cup flash points for the ThermalForm leads; 20–40 formulations with known recipes to train a composition-aware outgassing model; extending the physics model to cured adhesives, where volatiles escape by diffusion.</p>
+    <p>All results are screening estimates from published data and physical models, not certification. Sources include the OCP immersion fluid specification, supplier data sheets, NASA CR-2009-215637, NASA TM-2001-211196, the ESA ionic-liquid lubricant report, and NASA Goddard's spacecraft material outgassing data.</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+const NS="http://www.w3.org/2000/svg";
+function el(tag,attrs,parent,text){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(text!=null)e.textContent=text;if(parent)parent.appendChild(e);return e;}
+function svg(id,w,h){const s=el("svg",{viewBox:`0 0 ${w} ${h}`});document.getElementById(id).appendChild(s);return s;}
+function tip(node,t){el("title",{},node,t);}
+
+/* ---- Thesis: temperature axis ---- */
+(function(){
+  const W=920,H=190,x0=24,x1=W-24,tMin=-60,tMax=140; const x=t=>x0+(t-tMin)/(tMax-tMin)*(x1-x0);
+  const s=svg("thesis",W,H);
+  const axY=150;
+  for(let t=-60;t<=140;t+=20){el("line",{x1:x(t),x2:x(t),y1:20,y2:axY,style:"stroke:var(--line)","stroke-width":1},s);el("text",{x:x(t),y:axY+18,"text-anchor":"middle"},s,`${t} °C`);}
+  el("line",{x1:x0,x2:x1,y1:axY,y2:axY,style:"stroke:var(--faint)","stroke-width":1},s);
+  const bands=[
+    {a:-45.7,b:68.7,y:44,c:"var(--ref)",t:"PFPE lubricant window (PFAS)",d:"PFPE usable vacuum window −46 to 69 °C"},
+    {a:-29.9,b:81.4,y:82,c:"var(--teal)",t:"Best PFAS-free oil window",d:"Penta-silahydrocarbon window −30 to 81 °C"},
+    {a:40,b:50,y:120,c:"var(--gold)",t:"Immersion tank, 40–50 °C",d:"ThermalForm design case: fluid supply 40 °C, return 50 °C"},
+  ];
+  bands.forEach(b=>{const r=el("rect",{x:x(b.a),y:b.y,width:x(b.b)-x(b.a),height:16,rx:4,style:`fill:${b.c}`},s);tip(r,b.d);
+    const side=b.a===40; const lx=side?x(b.b)+8:x(b.a)+6; const anchor="start"; el("text",{x:lx,y:side?b.y+12:b.y-6,class:"lab","text-anchor":anchor},s,b.t);});
+  // markers
+  [{t:125,l:"E595 test, 125 °C",c:"var(--teal)"},{t:-30,l:"OCP pour limit",c:"var(--gold)"}].forEach(m=>{
+    el("line",{x1:x(m.t),x2:x(m.t),y1:20,y2:axY,style:`stroke:${m.c}`,"stroke-width":2,"stroke-dasharray":"4 3"},s);
+    el("text",{x:m.t>100?x(m.t)-6:x(m.t)+6,y:14,class:"lab-b","text-anchor":m.t>100?"end":"start"},s,m.l);});
+})();
+
+/* ---- Lubricant windows ---- */
+(function(){
+  const rows=[
+    {n:"PFPE (PFAS)",a:-45.7,b:68.7,c:"var(--ref)"},
+    {n:"Silahydrocarbon",a:-29.9,b:81.4,c:"var(--teal)"},
+    {n:"MAC + 50% silahydrocarbon",a:-25.6,b:52.5,c:"var(--teal)"},
+    {n:"MAC (Pennzane)",a:-21.4,b:48.0,c:"var(--teal)"},
+  ];
+  const W=440,H=210,L=12,R=W-14,top=8,rowH=42,tMin=-60,tMax=100; const x=t=>L+(t-tMin)/(tMax-tMin)*(R-L);
+  const s=svg("windows",W,H); s.parentNode.querySelector("svg").style.minWidth="380px";
+  const base=top+rows.length*rowH+4;
+  for(let t=-60;t<=100;t+=40){el("line",{x1:x(t),x2:x(t),y1:top,y2:base,style:"stroke:var(--line)"},s);el("text",{x:x(t),y:base+16,"text-anchor":"middle"},s,`${t} °C`);}
+  rows.forEach((r,i)=>{const y=top+i*rowH;
+    el("text",{x:L,y:y+12,class:"lab"},s,r.n);
+    const rc=el("rect",{x:x(r.a),y:y+18,width:x(r.b)-x(r.a),height:12,rx:4,style:`fill:${r.c}`},s); tip(rc,`${r.n}: ${r.a.toFixed(1)} to ${r.b.toFixed(1)} °C`);
+    el("text",{x:x(r.a)-6,y:y+28,"text-anchor":"end"},s,Math.round(r.a)); el("text",{x:x(r.b)+6,y:y+28},s,Math.round(r.b));});
+})();
+
+/* ---- Pass rate by class ---- */
+(function(){
+  const d=[["PEEK / PEI / PPS",96,71],["Fluoropolymers",88,454],["PFPE oils, greases",74,93],["Polyester / PET",57,384],["Epoxy",50,2758],["Polyimide",50,418],["Silicone",44,2026],["Polyurethane",42,889],["Acrylic",34,543],["Rubber",26,191],["Hydrocarbon lubricants",20,75],["Nylon / aramid",8,281]];
+  const W=440,rowH=22,top=4,labW=150,R=W-40,H=top+d.length*rowH+24; const x=v=>labW+v/100*(R-labW);
+  const s=svg("classes",W,H); s.style.minWidth="380px";
+  [0,50,100].forEach(v=>{el("line",{x1:x(v),x2:x(v),y1:top,y2:top+d.length*rowH,style:"stroke:var(--line)"},s);el("text",{x:x(v),y:top+d.length*rowH+16,"text-anchor":"middle"},s,`${v}%`);});
+  d.forEach((r,i)=>{const y=top+i*rowH;
+    el("text",{x:labW-8,y:y+15,"text-anchor":"end",class:"lab"},s,r[0]);
+    const hl=r[0]==="Hydrocarbon lubricants";
+    const b=el("rect",{x:labW,y:y+5,width:Math.max(x(r[1])-labW,2),height:12,rx:4,style:`fill:${hl?"var(--gold)":"var(--teal)"}`},s); tip(b,`${r[0]}: ${r[1]}% pass, ${r[2].toLocaleString("en-US")} tests`);
+    el("text",{x:x(r[1])+6,y:y+15},s,`${r[1]}%`);});
+})();
+
+/* ---- Validation scatter (log-log) ---- */
+(function(){
+  const pts=[{n:"DC 704",p:100,m:99.85,dx:-8,dy:-10,a:"end"},{n:"DC 705",p:100,m:97.2,dx:10,dy:14,a:"start"},{n:"Polyphenyl ether",p:18.78,m:46.4,dx:10,dy:4,a:"start"},{n:"MAC (Pennzane)",p:1.06,m:0.61,dx:10,dy:4,a:"start"},{n:"PFPE (Z25 / 815Z)",p:0.022,m:0.04,dx:10,dy:4,a:"start"}];
+  const W=880,H=330,L=64,R=W-30,T=14,B=H-46,lo=-2,hi=2.3;
+  const sx=v=>L+(Math.log10(v)-lo)/(hi-lo)*(R-L), sy=v=>B-(Math.log10(v)-lo)/(hi-lo)*(B-T);
+  const s=svg("valid",W,H);
+  [0.01,0.1,1,10,100].forEach(v=>{el("line",{x1:sx(v),x2:sx(v),y1:T,y2:B,style:"stroke:var(--line)"},s);el("line",{x1:L,x2:R,y1:sy(v),y2:sy(v),style:"stroke:var(--line)"},s);
+    el("text",{x:sx(v),y:B+16,"text-anchor":"middle"},s,`${v}%`);el("text",{x:L-8,y:sy(v)+4,"text-anchor":"end"},s,`${v}%`);});
+  // 2.5x band
+  const f=2.5, a=Math.pow(10,lo), b=Math.pow(10,hi);
+  el("polygon",{points:`${sx(a)},${sy(a*f)} ${sx(b/f)},${sy(b)} ${sx(b)},${sy(b)} ${sx(b)},${sy(b/f)} ${sx(a*f)},${sy(a)} ${sx(a)},${sy(a)}`,style:"fill:var(--teal-soft)"},s);
+  el("line",{x1:sx(a),y1:sy(a),x2:sx(b),y2:sy(b),style:"stroke:var(--faint)","stroke-width":1,"stroke-dasharray":"4 4"},s);
+  el("text",{x:sx(30),y:sy(30)-8,"text-anchor":"end"},s,"predicted = measured");
+  el("text",{x:(L+R)/2,y:H-8,"text-anchor":"middle"},s,"Measured TML (NASA)");
+  const yl=el("text",{x:16,y:(T+B)/2,"text-anchor":"middle",transform:`rotate(-90 16 ${(T+B)/2})`},s,"Predicted TML");
+  pts.forEach(p=>{const g=el("g",{},s);
+    el("circle",{cx:sx(p.m),cy:sy(p.p),r:6,style:"fill:var(--teal);stroke:var(--surface)","stroke-width":2},g);
+    el("circle",{cx:sx(p.m),cy:sy(p.p),r:14,style:"fill:transparent"},g);
+    tip(g,`${p.n}: predicted ${p.p}% , measured ${p.m}%`);
+    el("text",{x:sx(p.m)+p.dx,y:sy(p.p)+p.dy,class:"lab","text-anchor":p.a},s,p.n);});
+})();
+})();
+</script>
+</body>
+</html>

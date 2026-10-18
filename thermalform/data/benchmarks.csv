@@ -1,0 +1,3 @@
+id,name,chemistry,kv40_min_cst,kv40_max_cst,flash_coc_min_c,pour_max_c,note,source
+XOM3235,ExxonMobil Data Center Immersion Fluid 3235 Super,PAO,13.6,14.6,210,-69,sales specification limits,https://www.exxonmobilchemical.com/en/chemicals/webapi/dps/v1/datasheets/130000108783/1/en
+XOM3151,ExxonMobil Data Center Immersion Fluid 3151,PAO,,,150,-54,viscosity reported on COA only,https://exxonmobilchemical.com/en/chemicals/webapi/dps/v1/datasheets/130000108780/1/en

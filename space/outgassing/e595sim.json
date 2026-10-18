@@ -1,0 +1,300 @@
+{
+ "geometry": {
+  "A_port_cm2": 0.31172453105244724,
+  "A_surface_cm2": 1.4999999999999998,
+  "A_eff_cm2": 0.2580893444695179,
+  "eta": 0.85,
+  "A_dep_cm2": 5.0
+ },
+ "validation": [
+  {
+   "fluid": "DC 704 (tetraphenyl tetramethyl trisiloxane)",
+   "P125_Pa": 0.18990224689701057,
+   "dH_kJ": 110.27614689804129,
+   "M": 0.4848,
+   "TML_pred": 100.0,
+   "CVCM_pred": 84.78582798655458,
+   "TML_nasa_median": 99.85,
+   "CVCM_nasa_median": 11.3,
+   "TML_nasa_range": [
+    99.85,
+    99.85
+   ],
+   "CVCM_nasa_range": [
+    11.3,
+    11.3
+   ],
+   "n_tests": 1,
+   "vp_src": "Duniway: 2e-8 Torr at 25 C; bp 210 C at 0.5 Torr"
+  },
+  {
+   "fluid": "DC 705 (pentaphenyl trimethyl trisiloxane)",
+   "P125_Pa": 0.028313373156754407,
+   "dH_kJ": 112.41868241530472,
+   "M": 0.5469,
+   "TML_pred": 100.0,
+   "CVCM_pred": 84.9727028930304,
+   "TML_nasa_median": 97.2,
+   "CVCM_nasa_median": 81.0,
+   "TML_nasa_range": [
+    97.2,
+    97.2
+   ],
+   "CVCM_nasa_range": [
+    81.0,
+    81.0
+   ],
+   "n_tests": 1,
+   "vp_src": "Duniway: 2.4e-9 Torr at 25 C; bp 243 C at 0.5 Torr"
+  },
+  {
+   "fluid": "Polyphenyl ether (5P4E class; NASA entry is Convalex-10)",
+   "P125_Pa": 0.005452587250259012,
+   "dH_kJ": 113.84496580814391,
+   "M": 0.4465,
+   "TML_pred": 18.77835795384246,
+   "CVCM_pred": 15.957493500569777,
+   "TML_nasa_median": 46.4,
+   "CVCM_nasa_median": 40.0,
+   "TML_nasa_range": [
+    46.4,
+    46.4
+   ],
+   "CVCM_nasa_range": [
+    40.0,
+    40.0
+   ],
+   "n_tests": 1,
+   "vp_src": "Santovac 5 (5P4E), Duniway: 4e-10 Torr at 25 C; bp 275 C at 0.5 Torr. Convalex-10 is a related polyphenyl ether, not identical"
+  },
+  {
+   "fluid": "MAC (Pennzane / Nye 2001 family)",
+   "P125_Pa": 0.00021516373229315451,
+   "dH_kJ": 132.7470067836478,
+   "M": 0.91,
+   "TML_pred": 1.0578741945713872,
+   "CVCM_pred": 0.8991589514660722,
+   "TML_nasa_median": 0.61,
+   "CVCM_nasa_median": 0.14,
+   "TML_nasa_range": [
+    0.21,
+    1.42
+   ],
+   "CVCM_nasa_range": [
+    0.05,
+    0.61
+   ],
+   "n_tests": 7,
+   "vp_src": "NASA CR-2009-215637 (Pennzane X2000)"
+  },
+  {
+   "fluid": "PFPE (Fomblin Z25 / Brayco 815Z)",
+   "P125_Pa": 1.4074926547547077e-06,
+   "dH_kJ": 115.19993344949141,
+   "M": 9.5,
+   "TML_pred": 0.022358990830681495,
+   "CVCM_pred": 0.019000875495972534,
+   "TML_nasa_median": 0.045,
+   "CVCM_nasa_median": 0.01,
+   "TML_nasa_range": [
+    0.03,
+    0.06
+   ],
+   "CVCM_nasa_range": [
+    0.0,
+    0.02
+   ],
+   "n_tests": 2,
+   "vp_src": "NASA CR-2009-215637 (Fomblin Z25); molar mass assumed 9.5 kg/mol"
+  }
+ ],
+ "sensitivity": [
+  {
+   "port_mm": 4.0,
+   "surf_cm2": 0.5,
+   "A_eff_cm2": 0.10042432133241842,
+   "TML": {
+    "DC 704 (tetr": 100.0,
+    "DC 705 (pent": 41.991,
+    "Polyphenyl e": 7.307,
+    "MAC (Pennzan": 0.412,
+    "PFPE (Fombli": 0.009
+   }
+  },
+  {
+   "port_mm": 4.0,
+   "surf_cm2": 1.4999999999999998,
+   "A_eff_cm2": 0.11594990926046925,
+   "TML": {
+    "DC 704 (tetr": 100.0,
+    "DC 705 (pent": 48.483,
+    "Polyphenyl e": 8.436,
+    "MAC (Pennzan": 0.475,
+    "PFPE (Fombli": 0.01
+   }
+  },
+  {
+   "port_mm": 4.0,
+   "surf_cm2": 2.9999999999999996,
+   "A_eff_cm2": 0.12061154169905966,
+   "TML": {
+    "DC 704 (tetr": 100.0,
+    "DC 705 (pent": 50.432,
+    "Polyphenyl e": 8.776,
+    "MAC (Pennzan": 0.494,
+    "PFPE (Fombli": 0.01
+   }
+  },
+  {
+   "port_mm": 6.3,
+   "surf_cm2": 0.5,
+   "A_eff_cm2": 0.1920137430417919,
+   "TML": {
+    "DC 704 (tetr": 100.0,
+    "DC 705 (pent": 80.288,
+    "Polyphenyl e": 13.971,
+    "MAC (Pennzan": 0.787,
+    "PFPE (Fombli": 0.017
+   }
+  },
+  {
+   "port_mm": 6.3,
+   "surf_cm2": 1.4999999999999998,
+   "A_eff_cm2": 0.2580893444695179,
+   "TML": {
+    "DC 704 (tetr": 100.0,
+    "DC 705 (pent": 100.0,
+    "Polyphenyl e": 18.778,
+    "MAC (Pennzan": 1.058,
+    "PFPE (Fombli": 0.022
+   }
+  },
+  {
+   "port_mm": 6.3,
+   "surf_cm2": 2.9999999999999996,
+   "A_eff_cm2": 0.2823826632887696,
+   "TML": {
+    "DC 704 (tetr": 100.0,
+    "DC 705 (pent": 100.0,
+    "Polyphenyl e": 20.546,
+    "MAC (Pennzan": 1.157,
+    "PFPE (Fombli": 0.024
+   }
+  },
+  {
+   "port_mm": 8.0,
+   "surf_cm2": 0.5,
+   "A_eff_cm2": 0.2506619487856885,
+   "TML": {
+    "DC 704 (tetr": 100.0,
+    "DC 705 (pent": 100.0,
+    "Polyphenyl e": 18.238,
+    "MAC (Pennzan": 1.027,
+    "PFPE (Fombli": 0.022
+   }
+  },
+  {
+   "port_mm": 8.0,
+   "surf_cm2": 1.4999999999999998,
+   "A_eff_cm2": 0.3764913591745884,
+   "TML": {
+    "DC 704 (tetr": 100.0,
+    "DC 705 (pent": 100.0,
+    "Polyphenyl e": 27.393,
+    "MAC (Pennzan": 1.543,
+    "PFPE (Fombli": 0.033
+   }
+  },
+  {
+   "port_mm": 8.0,
+   "surf_cm2": 2.9999999999999996,
+   "A_eff_cm2": 0.4305204335703689,
+   "TML": {
+    "DC 704 (tetr": 100.0,
+    "DC 705 (pent": 100.0,
+    "Polyphenyl e": 31.324,
+    "MAC (Pennzan": 1.765,
+    "PFPE (Fombli": 0.037
+   }
+  }
+ ],
+ "tml_log10_error": {
+  "DC 704 (tetraphenyl tetramethy": 0.0,
+  "DC 705 (pentaphenyl trimethyl ": 0.01,
+  "Polyphenyl ether (5P4E class; ": -0.39,
+  "MAC (Pennzane / Nye 2001 famil": 0.24,
+  "PFPE (Fomblin Z25 / Brayco 815": -0.3
+ },
+ "design_rule": {
+  "TML_1pct_P125_sqrtM": 0.00019402412877098663,
+  "CVCM_0p1pct_P125_sqrtM": 2.282636809070431e-05,
+  "units": "Pa*(kg/mol)^0.5 at 125 C"
+ },
+ "lubricant_predictions": {
+  "penta-silahydrocarbon": {
+   "TML": 0.0102,
+   "CVCM": 0.0087
+  },
+  "OrbitChem target oil": {
+   "TML": 0.0341,
+   "CVCM": 0.029
+  }
+ },
+ "tail_demo": [
+  {
+   "tail_pct": 0.0,
+   "TML": 0.106,
+   "CVCM": 0.09
+  },
+  {
+   "tail_pct": 0.5,
+   "TML": 0.165,
+   "CVCM": 0.14
+  },
+  {
+   "tail_pct": 1.0,
+   "TML": 0.223,
+   "CVCM": 0.19
+  },
+  {
+   "tail_pct": 2.0,
+   "TML": 0.34,
+   "CVCM": 0.289
+  },
+  {
+   "tail_pct": 4.0,
+   "TML": 0.572,
+   "CVCM": 0.486
+  }
+ ],
+ "devol_demo": [
+  {
+   "devol_hours_150C": 0,
+   "tail_left_pct": 2.0,
+   "TML": 0.34,
+   "CVCM": 0.289,
+   "pass": 0.0
+  },
+  {
+   "devol_hours_150C": 2,
+   "tail_left_pct": 1.321,
+   "TML": 0.261,
+   "CVCM": 0.222,
+   "pass": 0.0
+  },
+  {
+   "devol_hours_150C": 8,
+   "tail_left_pct": 0.367,
+   "TML": 0.149,
+   "CVCM": 0.127,
+   "pass": 0.0
+  },
+  {
+   "devol_hours_150C": 24,
+   "tail_left_pct": 0.011,
+   "TML": 0.107,
+   "CVCM": 0.091,
+   "pass": 1.0
+  }
+ ]
+}

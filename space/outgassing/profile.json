@@ -1,0 +1,580 @@
+{
+ "n": 12842,
+ "pass_rate": 0.459,
+ "fail_mode": {
+  "both_fail": 0.231,
+  "tml_only": 0.2,
+  "cvcm_only": 0.11
+ },
+ "mapped_share": 0.667,
+ "by_chem": [
+  {
+   "chem": "Unmapped (trade name only)",
+   "n": 4274,
+   "pass_rate": 0.442,
+   "tml_med": 0.9,
+   "cvcm_med": 0.04
+  },
+  {
+   "chem": "Epoxy",
+   "n": 2758,
+   "pass_rate": 0.503,
+   "tml_med": 0.86,
+   "cvcm_med": 0.03
+  },
+  {
+   "chem": "Silicone",
+   "n": 2026,
+   "pass_rate": 0.438,
+   "tml_med": 0.48,
+   "cvcm_med": 0.13
+  },
+  {
+   "chem": "Polyurethane",
+   "n": 889,
+   "pass_rate": 0.421,
+   "tml_med": 1.06,
+   "cvcm_med": 0.05
+  },
+  {
+   "chem": "Acrylic",
+   "n": 543,
+   "pass_rate": 0.335,
+   "tml_med": 1.33,
+   "cvcm_med": 0.05
+  },
+  {
+   "chem": "Fluoropolymer (PTFE/FEP/ETFE)",
+   "n": 454,
+   "pass_rate": 0.879,
+   "tml_med": 0.12,
+   "cvcm_med": 0.01
+  },
+  {
+   "chem": "Polyimide",
+   "n": 418,
+   "pass_rate": 0.498,
+   "tml_med": 0.97,
+   "cvcm_med": 0.01
+  },
+  {
+   "chem": "Polyester / PET",
+   "n": 384,
+   "pass_rate": 0.568,
+   "tml_med": 0.475,
+   "cvcm_med": 0.06
+  },
+  {
+   "chem": "Polyamide / nylon / aramid",
+   "n": 281,
+   "pass_rate": 0.078,
+   "tml_med": 2.43,
+   "cvcm_med": 0.04
+  },
+  {
+   "chem": "Rubber (EPDM/NBR/neoprene)",
+   "n": 191,
+   "pass_rate": 0.257,
+   "tml_med": 1.35,
+   "cvcm_med": 0.3
+  },
+  {
+   "chem": "Polyolefin",
+   "n": 191,
+   "pass_rate": 0.356,
+   "tml_med": 0.58,
+   "cvcm_med": 0.13
+  },
+  {
+   "chem": "PFPE / fluorinated oil",
+   "n": 93,
+   "pass_rate": 0.742,
+   "tml_med": 0.14,
+   "cvcm_med": 0.04
+  },
+  {
+   "chem": "Phenolic",
+   "n": 86,
+   "pass_rate": 0.174,
+   "tml_med": 2.43,
+   "cvcm_med": 0.01
+  },
+  {
+   "chem": "Hydrocarbon lubricant (MAC/PAO)",
+   "n": 75,
+   "pass_rate": 0.2,
+   "tml_med": 1.42,
+   "cvcm_med": 0.34
+  },
+  {
+   "chem": "PEEK / PEI / PPS / PSU",
+   "n": 71,
+   "pass_rate": 0.958,
+   "tml_med": 0.31,
+   "cvcm_med": 0.0
+  },
+  {
+   "chem": "PVC / vinyl",
+   "n": 62,
+   "pass_rate": 0.355,
+   "tml_med": 1.65,
+   "cvcm_med": 0.24
+  },
+  {
+   "chem": "Polysulfide",
+   "n": 25,
+   "pass_rate": 0.12,
+   "tml_med": 7.57,
+   "cvcm_med": 0.46
+  },
+  {
+   "chem": "Cyanate ester",
+   "n": 21,
+   "pass_rate": 1.0,
+   "tml_med": 0.1,
+   "cvcm_med": 0.0
+  }
+ ],
+ "by_use": [
+  {
+   "use": "ADH-SEALANT",
+   "n": 81,
+   "pass_rate": 0.062
+  },
+  {
+   "use": "PRIMER",
+   "n": 101,
+   "pass_rate": 0.099
+  },
+  {
+   "use": "INK",
+   "n": 146,
+   "pass_rate": 0.212
+  },
+  {
+   "use": "PAINT",
+   "n": 459,
+   "pass_rate": 0.22
+  },
+  {
+   "use": "SOLDER MASK",
+   "n": 108,
+   "pass_rate": 0.259
+  },
+  {
+   "use": "FOAM",
+   "n": 300,
+   "pass_rate": 0.26
+  },
+  {
+   "use": "MARKING INK",
+   "n": 90,
+   "pass_rate": 0.267
+  },
+  {
+   "use": "CONF COAT",
+   "n": 317,
+   "pass_rate": 0.281
+  },
+  {
+   "use": "SEALANT",
+   "n": 98,
+   "pass_rate": 0.296
+  },
+  {
+   "use": "DAMPER",
+   "n": 196,
+   "pass_rate": 0.372
+  },
+  {
+   "use": "COATING",
+   "n": 298,
+   "pass_rate": 0.372
+  },
+  {
+   "use": "LUBRICANT",
+   "n": 131,
+   "pass_rate": 0.374
+  },
+  {
+   "use": "LACING TAPE",
+   "n": 157,
+   "pass_rate": 0.382
+  },
+  {
+   "use": "LABEL",
+   "n": 102,
+   "pass_rate": 0.382
+  },
+  {
+   "use": "TAPE",
+   "n": 550,
+   "pass_rate": 0.385
+  },
+  {
+   "use": "GASKET",
+   "n": 139,
+   "pass_rate": 0.388
+  },
+  {
+   "use": "ADHESIVE",
+   "n": 1774,
+   "pass_rate": 0.418
+  },
+  {
+   "use": "ANTI STATIC FILM",
+   "n": 84,
+   "pass_rate": 0.429
+  },
+  {
+   "use": "FILM ADHESIVE",
+   "n": 142,
+   "pass_rate": 0.472
+  },
+  {
+   "use": "FILM",
+   "n": 148,
+   "pass_rate": 0.534
+  },
+  {
+   "use": "SHRINK TUBING",
+   "n": 183,
+   "pass_rate": 0.541
+  },
+  {
+   "use": "POTTING",
+   "n": 845,
+   "pass_rate": 0.544
+  },
+  {
+   "use": "COND ADHESIVE",
+   "n": 183,
+   "pass_rate": 0.557
+  },
+  {
+   "use": "CONN INSUL",
+   "n": 115,
+   "pass_rate": 0.574
+  },
+  {
+   "use": "INSULATION",
+   "n": 126,
+   "pass_rate": 0.587
+  },
+  {
+   "use": "STRUCTURAL",
+   "n": 83,
+   "pass_rate": 0.614
+  },
+  {
+   "use": "O-RING",
+   "n": 100,
+   "pass_rate": 0.62
+  },
+  {
+   "use": "CONNECTOR",
+   "n": 107,
+   "pass_rate": 0.701
+  },
+  {
+   "use": "MOLD CPND",
+   "n": 490,
+   "pass_rate": 0.733
+  },
+  {
+   "use": "WIRE INSUL",
+   "n": 123,
+   "pass_rate": 0.813
+  },
+  {
+   "use": "LAMINATE",
+   "n": 436,
+   "pass_rate": 0.828
+  }
+ ],
+ "near_miss_share_of_fails": 0.367,
+ "devol_lever": [
+  {
+   "chem": "PFPE / fluorinated oil",
+   "n_devol": 32,
+   "pass_devol": 0.906,
+   "pass_other": 0.656,
+   "cvcm_med_devol": 0.03,
+   "cvcm_med_other": 0.04
+  },
+  {
+   "chem": "Silicone",
+   "n_devol": 183,
+   "pass_devol": 0.683,
+   "pass_other": 0.413,
+   "cvcm_med_devol": 0.06,
+   "cvcm_med_other": 0.15
+  },
+  {
+   "chem": "Unmapped (trade name only)",
+   "n_devol": 20,
+   "pass_devol": 0.7,
+   "pass_other": 0.441,
+   "cvcm_med_devol": 0.025,
+   "cvcm_med_other": 0.04
+  }
+ ],
+ "devol_overall": {
+  "n": 256,
+  "pass_devol": 0.691,
+  "pass_other": 0.454
+ },
+ "devol_pairs": {
+  "n_pairs": 12,
+  "median_cvcm_ratio": 0.434,
+  "median_tml_ratio": 0.357,
+  "pass_as_is": 0.014,
+  "pass_devol": 0.593
+ },
+ "noise_floor": {
+  "families": 414,
+  "tests": 1835,
+  "agree_with_family_majority": 0.859,
+  "families_with_mixed_verdicts": 0.403,
+  "median_within_family_cvcm_cv": 0.557
+ },
+ "trend": [
+  {
+   "era": 0,
+   "id_lo": 1,
+   "id_hi": 6502,
+   "n": 2569,
+   "pass_rate": 0.405
+  },
+  {
+   "era": 1,
+   "id_lo": 6503,
+   "id_hi": 12775,
+   "n": 2568,
+   "pass_rate": 0.413
+  },
+  {
+   "era": 2,
+   "id_lo": 12778,
+   "id_hi": 19006,
+   "n": 2568,
+   "pass_rate": 0.46
+  },
+  {
+   "era": 3,
+   "id_lo": 19009,
+   "id_hi": 26194,
+   "n": 2568,
+   "pass_rate": 0.484
+  },
+  {
+   "era": 4,
+   "id_lo": 26197,
+   "id_hi": 35130,
+   "n": 2569,
+   "pass_rate": 0.533
+  }
+ ],
+ "oil_examples": [
+  {
+   "name": "BRAYCOTE 815Z OIL/CLM ADDITIVE",
+   "TML": 0.17,
+   "CVCM": 0.07
+  },
+  {
+   "name": "DC 200 SILICONE FLUID 30,000 CPS",
+   "TML": 0.4,
+   "CVCM": 0.2
+  },
+  {
+   "name": "DC 200 SILICONE FLUID 350 CPS",
+   "TML": 0.27,
+   "CVCM": 0.11
+  },
+  {
+   "name": "FOMBLIN ZLHT GREASE",
+   "TML": 2.36,
+   "CVCM": 1.23
+  },
+  {
+   "name": "KRYTOX 143 A/C LUBRICATING OIL",
+   "TML": 0.69,
+   "CVCM": 0.4
+  },
+  {
+   "name": "KRYTOX 143 A/C LUBRICATING OIL",
+   "TML": 2.91,
+   "CVCM": 1.52
+  },
+  {
+   "name": "KRYTOX 143 A/C LUBRICATING OIL DEVOL",
+   "TML": 0.11,
+   "CVCM": 0.02
+  },
+  {
+   "name": "KRYTOX 143 A/C LUBRICATING OIL DEVOL",
+   "TML": 0.12,
+   "CVCM": 0.02
+  },
+  {
+   "name": "KRYTOX 143 A/C LUBRICATING OIL DEVOL",
+   "TML": 0.06,
+   "CVCM": 0.01
+  },
+  {
+   "name": "KRYTOX 143 A/C LUBRICATING OIL DEVOL",
+   "TML": 0.06,
+   "CVCM": 0.02
+  },
+  {
+   "name": "KRYTOX 143 A/C LUBRICATING OIL DEVOL",
+   "TML": 0.04,
+   "CVCM": 0.01
+  },
+  {
+   "name": "KRYTOX 143 A/C LUBRICATING OIL DEVOL",
+   "TML": 0.05,
+   "CVCM": 0.04
+  },
+  {
+   "name": "KRYTOX 143 A/C LUBRICATING OIL DEVOL",
+   "TML": 0.1,
+   "CVCM": 0.06
+  },
+  {
+   "name": "KRYTOX 143 A/C LUBRICATING OIL DEVOL",
+   "TML": 0.1,
+   "CVCM": 0.03
+  },
+  {
+   "name": "KRYTOX 143 A/C LUBRICATING OIL DEVOL",
+   "TML": 0.1,
+   "CVCM": 0.04
+  },
+  {
+   "name": "KRYTOX 143 A/C LUBRICATING OIL DEVOL",
+   "TML": 0.27,
+   "CVCM": 0.02
+  },
+  {
+   "name": "KRYTOX 143 A/C LUBRICATING OIL DEVOL",
+   "TML": 0.37,
+   "CVCM": 0.02
+  },
+  {
+   "name": "KRYTOX 143 A/C LUBRICATING OIL DEVOL",
+   "TML": 0.27,
+   "CVCM": 0.04
+  },
+  {
+   "name": "KRYTOX 143 A/C LUBRICATING OIL DEVOL (ITT)",
+   "TML": 0.14,
+   "CVCM": 0.06
+  },
+  {
+   "name": "KRYTOX 143 A/C LUBRICATING OIL DEVOL LOT 240",
+   "TML": 0.13,
+   "CVCM": 0.03
+  },
+  {
+   "name": "KRYTOX 143 A/C LUBRICATING OIL DEVOL LOT 240",
+   "TML": 0.59,
+   "CVCM": 0.04
+  },
+  {
+   "name": "KRYTOX 143 A/C LUBRICATING OIL DEVOL LOT 240",
+   "TML": 1.55,
+   "CVCM": 0.58
+  },
+  {
+   "name": "KRYTOX 143 A/C LUBRICATING OIL DEVOL LOT 240",
+   "TML": 0.04,
+   "CVCM": 0.02
+  },
+  {
+   "name": "KRYTOX 143 A/C LUBRICATING OIL DEVOL LOT 240",
+   "TML": 0.08,
+   "CVCM": 0.0
+  },
+  {
+   "name": "KRYTOX 143 A/C LUBRICATING OIL DEVOL LOT 240",
+   "TML": 0.99,
+   "CVCM": 0.11
+  },
+  {
+   "name": "KRYTOX 143 A/C LUBRICATING OIL DEVOL LOT 240",
+   "TML": 0.05,
+   "CVCM": 0.01
+  },
+  {
+   "name": "KRYTOX 143 A/C LUBRICATING OIL DEVOL LOT 240",
+   "TML": 0.06,
+   "CVCM": 0.02
+  },
+  {
+   "name": "KRYTOX 143 A/C LUBRICATING OIL DEVOL LOT 240",
+   "TML": 0.11,
+   "CVCM": 0.03
+  },
+  {
+   "name": "KRYTOX 143 A/C LUBRICATING OIL DEVOL LOT 240",
+   "TML": 0.05,
+   "CVCM": 0.01
+  },
+  {
+   "name": "KRYTOX 143 A/C LUBRICATING OIL DEVOL LOT 240",
+   "TML": 0.07,
+   "CVCM": 0.01
+  },
+  {
+   "name": "KRYTOX 143 A/C LUBRICATING OIL DEVOL LOT 240",
+   "TML": 0.09,
+   "CVCM": 0.01
+  },
+  {
+   "name": "KRYTOX 143 A/C LUBRICATING OIL DEVOL LOT 240",
+   "TML": 0.06,
+   "CVCM": 0.01
+  },
+  {
+   "name": "KRYTOX 143 A/C LUBRICATING OIL DEVOL LOT 240",
+   "TML": 0.17,
+   "CVCM": 0.07
+  },
+  {
+   "name": "KRYTOX 143 A/C LUBRICATING OIL DEVOL LOT 240",
+   "TML": 0.28,
+   "CVCM": 0.06
+  },
+  {
+   "name": "KRYTOX 143 A/C LUBRICATING OIL DEVOL LOT 240",
+   "TML": 0.1,
+   "CVCM": 0.03
+  },
+  {
+   "name": "KRYTOX 143 A/C LUBRICATING OIL LOT 240",
+   "TML": 2.69,
+   "CVCM": 1.26
+  },
+  {
+   "name": "KRYTOX 143 A/C LUBRICATION OIL DEVOL LOT 240",
+   "TML": 0.07,
+   "CVCM": 0.04
+  },
+  {
+   "name": "KRYTOX 143 A/C LUBRICATION OIL DEVOL LOT 240",
+   "TML": 0.07,
+   "CVCM": 0.06
+  },
+  {
+   "name": "KRYTOX 143 AB LUBRICATING OIL DEVOL AT 93C",
+   "TML": 28.93,
+   "CVCM": 13.03
+  },
+  {
+   "name": "KRYTOX 143 AC LUBRICATING OIL PERFLUOROALKYLPOLYETHER",
+   "TML": 1.38,
+   "CVCM": 0.71
+  }
+ ]
+}
