@@ -1,0 +1,212 @@
+{
+ "qsar": [
+  {
+   "stock": "PAO2",
+   "proxy": "hydrogenated 1-decene dimer (C20 branched alkane)",
+   "formula": "C20H42",
+   "datasheet_readily_biodeg": 0,
+   "qsar_biodeg": 74.0,
+   "qsar_ecotox": 7.4,
+   "confidence": "high",
+   "used_ml": true
+  },
+  {
+   "stock": "PAO4",
+   "proxy": "hydrogenated 1-decene trimer (C30 branched alkane)",
+   "formula": "C30H62",
+   "datasheet_readily_biodeg": 0,
+   "qsar_biodeg": 74.5,
+   "qsar_ecotox": 7.7,
+   "confidence": "high",
+   "used_ml": true
+  },
+  {
+   "stock": "PAO6",
+   "proxy": "hydrogenated 1-decene tetramer (C40 branched alkane)",
+   "formula": "C40H82",
+   "datasheet_readily_biodeg": 0,
+   "qsar_biodeg": 75.4,
+   "qsar_ecotox": 8.1,
+   "confidence": "high",
+   "used_ml": true
+  },
+  {
+   "stock": "EF7010",
+   "proxy": "diester proxy: bis(2-ethylhexyl) sebacate",
+   "formula": "C26H50O4",
+   "datasheet_readily_biodeg": 1,
+   "qsar_biodeg": 86.8,
+   "qsar_ecotox": 8.1,
+   "confidence": "high",
+   "used_ml": true
+  },
+  {
+   "stock": "EF3221",
+   "proxy": "monoester proxy: 2-ethylhexyl oleate",
+   "formula": "C26H50O2",
+   "datasheet_readily_biodeg": 1,
+   "qsar_biodeg": 88.7,
+   "qsar_ecotox": 8.2,
+   "confidence": "high",
+   "used_ml": true
+  },
+  {
+   "stock": "P1976",
+   "proxy": "polyol ester proxy: neopentyl glycol dioleate",
+   "formula": "C41H76O4",
+   "datasheet_readily_biodeg": 1,
+   "qsar_biodeg": 78.7,
+   "qsar_ecotox": 7.9,
+   "confidence": "high",
+   "used_ml": true
+  },
+  {
+   "stock": "NC1000",
+   "proxy": "natural ester proxy: triolein",
+   "formula": "C57H104O6",
+   "datasheet_readily_biodeg": 1,
+   "qsar_biodeg": 88.3,
+   "qsar_ecotox": 7.6,
+   "confidence": "high",
+   "used_ml": true
+  },
+  {
+   "stock": "HYV2",
+   "proxy": "naphthenic mineral oil proxy: hexyldecalin",
+   "formula": "C16H30",
+   "datasheet_readily_biodeg": 0,
+   "qsar_biodeg": 74.3,
+   "qsar_ecotox": 4.9,
+   "confidence": "high",
+   "used_ml": true
+  },
+  {
+   "stock": "RHC8",
+   "proxy": "renewable isoparaffin proxy: phytane (C20)",
+   "formula": "C20H42",
+   "datasheet_readily_biodeg": 1,
+   "qsar_biodeg": 75.7,
+   "qsar_ecotox": 7.4,
+   "confidence": "high",
+   "used_ml": true
+  }
+ ],
+ "agreement": 0.5555555555555556,
+ "qsar_tier": "gbr_morgan",
+ "twin": {
+  "Lead A (round 3)": {
+   "blend": {
+    "PAO4": 40,
+    "P1976": 35,
+    "PAO2": 25
+   },
+   "batch_kg": 1000.0,
+   "scale_tier": "pilot",
+   "scale_label": "Pilot",
+   "recommended_vessel": "Pilot reactor / mixing tank (50 L\u20131 m\u00b3)",
+   "manufacturing_process": "blending",
+   "total_cycle_time_min": 158.2,
+   "total_cycle_time_hr": 2.64,
+   "batches_per_day": 6.6,
+   "energy_kwh_per_batch": 80.0,
+   "energy_cost_usd_per_batch": 6.4,
+   "co2_kg_per_batch": 30.88,
+   "co2_kg_per_kg": 0.0309,
+   "yield_pct": 97.0,
+   "output_kg": 970.0,
+   "notes": "Resolved manufacturing process: blending. Scale tier: Pilot (Pilot reactor / mixing tank (50 L\u20131 m\u00b3)). Cycle time scales with batch size via a cube-root mixing-time heuristic (reference batch: 50 kg).",
+   "risks": [
+    {
+     "factor": "Mixing time scale-up",
+     "risk_level": "Medium",
+     "mitigation": "Mixing time generally increases with vessel diameter \u2014 verify homogeneity with in-process sampling at 3 vessel heights, not just impeller-tip speed matching."
+    }
+   ]
+  },
+  "Lead G (round 3)": {
+   "blend": {
+    "RHC8": 62,
+    "P1976": 38
+   },
+   "batch_kg": 1000.0,
+   "scale_tier": "pilot",
+   "scale_label": "Pilot",
+   "recommended_vessel": "Pilot reactor / mixing tank (50 L\u20131 m\u00b3)",
+   "manufacturing_process": "blending",
+   "total_cycle_time_min": 158.2,
+   "total_cycle_time_hr": 2.64,
+   "batches_per_day": 6.6,
+   "energy_kwh_per_batch": 80.0,
+   "energy_cost_usd_per_batch": 6.4,
+   "co2_kg_per_batch": 30.88,
+   "co2_kg_per_kg": 0.0309,
+   "yield_pct": 97.0,
+   "output_kg": 970.0,
+   "notes": "Resolved manufacturing process: blending. Scale tier: Pilot (Pilot reactor / mixing tank (50 L\u20131 m\u00b3)). Cycle time scales with batch size via a cube-root mixing-time heuristic (reference batch: 50 kg).",
+   "risks": [
+    {
+     "factor": "Mixing time scale-up",
+     "risk_level": "Medium",
+     "mitigation": "Mixing time generally increases with vessel diameter \u2014 verify homogeneity with in-process sampling at 3 vessel heights, not just impeller-tip speed matching."
+    }
+   ]
+  },
+  "IntelliForm TOPSIS, standard": {
+   "blend": {
+    "RHC8": 68.7,
+    "EF7010": 31.3
+   },
+   "batch_kg": 1000.0,
+   "scale_tier": "pilot",
+   "scale_label": "Pilot",
+   "recommended_vessel": "Pilot reactor / mixing tank (50 L\u20131 m\u00b3)",
+   "manufacturing_process": "blending",
+   "total_cycle_time_min": 158.2,
+   "total_cycle_time_hr": 2.64,
+   "batches_per_day": 6.6,
+   "energy_kwh_per_batch": 80.0,
+   "energy_cost_usd_per_batch": 6.4,
+   "co2_kg_per_batch": 30.88,
+   "co2_kg_per_kg": 0.0309,
+   "yield_pct": 97.0,
+   "output_kg": 970.0,
+   "notes": "Resolved manufacturing process: blending. Scale tier: Pilot (Pilot reactor / mixing tank (50 L\u20131 m\u00b3)). Cycle time scales with batch size via a cube-root mixing-time heuristic (reference batch: 50 kg).",
+   "risks": [
+    {
+     "factor": "Mixing time scale-up",
+     "risk_level": "Medium",
+     "mitigation": "Mixing time generally increases with vessel diameter \u2014 verify homogeneity with in-process sampling at 3 vessel heights, not just impeller-tip speed matching."
+    }
+   ]
+  },
+  "IntelliForm TOPSIS, premium": {
+   "blend": {
+    "PAO4": 54.9,
+    "P1976": 37.5,
+    "RHC8": 7.7
+   },
+   "batch_kg": 1000.0,
+   "scale_tier": "pilot",
+   "scale_label": "Pilot",
+   "recommended_vessel": "Pilot reactor / mixing tank (50 L\u20131 m\u00b3)",
+   "manufacturing_process": "blending",
+   "total_cycle_time_min": 158.2,
+   "total_cycle_time_hr": 2.64,
+   "batches_per_day": 6.6,
+   "energy_kwh_per_batch": 80.0,
+   "energy_cost_usd_per_batch": 6.4,
+   "co2_kg_per_batch": 30.88,
+   "co2_kg_per_kg": 0.0309,
+   "yield_pct": 97.0,
+   "output_kg": 970.0,
+   "notes": "Resolved manufacturing process: blending. Scale tier: Pilot (Pilot reactor / mixing tank (50 L\u20131 m\u00b3)). Cycle time scales with batch size via a cube-root mixing-time heuristic (reference batch: 50 kg).",
+   "risks": [
+    {
+     "factor": "Mixing time scale-up",
+     "risk_level": "Medium",
+     "mitigation": "Mixing time generally increases with vessel diameter \u2014 verify homogeneity with in-process sampling at 3 vessel heights, not just impeller-tip speed matching."
+    }
+   ]
+  }
+ }
+}

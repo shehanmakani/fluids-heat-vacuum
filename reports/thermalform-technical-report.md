@@ -61,7 +61,7 @@ A microstrip designed for 50 Ω in air (Hammerstad–Jensen) on a Dk 3.5 laminat
 
 ## 7. Design method
 
-Blends of up to three stocks (each at least 5%) were searched with a multi-objective evolutionary optimizer (NSGA-II) under the OCP limits, in four scenarios: standard and premium flash class, central and worst-case ester permittivity. The optimizer belongs to ChemeNova's IntelliForm platform and is not in this repository; the resulting recipes are evaluated with the open models in `thermalform/evaluate_leads.py`.
+Blends of up to three stocks (each at least 5%) were searched with a multi-objective evolutionary optimizer (NSGA-II) under the OCP limits, in four scenarios: standard and premium flash class, central and worst-case ester permittivity. The round 3 optimizer is not in this repository. Section 8b repeats the design on IntelliForm's public NSGA-III engine, and `thermalform/evaluate_leads.py` re-evaluates the recipes with the open models.
 
 ## 8. Results
 
@@ -76,6 +76,16 @@ Reproduced by `python evaluate_leads.py` (1 kW chip, 40 °C supply, 6 L/min, 1 M
 | All-ester | EF 7010 52% + Priolube 1976 48% | −1.31 °C | 1,386 | −4,600 | 2.90 | 219 |
 
 Lead G is 100% readily biodegradable. Lead P meets a 210 °C premium flash class. The all-ester blend is the best performer thermally but fails the dielectric limit unless ester GHz permittivity turns out low.
+
+## 8b. Run on IntelliForm v1.6
+
+The same physics was plugged into IntelliForm as a new vertical (`platforms/intelliform/thermalform_vertical.py`). IntelliForm's NSGA-III engine searched blends with pumping cost, biodegradable share and chip cooling score as its three axes. Its TOPSIS selector then picked a recommended blend.
+
+- With flash ≥ 150 °C, it found 35 Pareto blends. The coolest fully biodegradable one is renewable isoparaffin 62.9% + Priolube 1976 37.1% (−0.22 °C, −$5,534 per MW·yr), which reproduces Lead G within one percentage point. TOPSIS picked renewable isoparaffin 68.7% + EF 7010 31.3%: 100% biodegradable and −$7,213 in pumping, but 0.29 °C warmer at the chip.
+- With flash ≥ 210 °C, TOPSIS picked PAO 4 54.9% + Priolube 1976 37.5% + renewable isoparaffin 7.7% (−0.76 °C).
+- Several picks sit exactly at Dk 2.300. Because ester GHz permittivity is unmeasured, the recommended blend should be re-selected with a Dk margin.
+- IntelliForm's QSAR (Morgan tier) ranks esters above hydrocarbons but scores all hydrocarbons near 75, so only 5 of 9 stocks agree with data sheets. Base oils are outside its training domain.
+- IntelliForm's digital twin puts a 1 t pilot batch at 2.6 h, 80 kWh and 0.031 kg CO₂ per kg.
 
 ## 9. Uncertainty
 

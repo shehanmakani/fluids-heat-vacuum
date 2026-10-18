@@ -108,6 +108,10 @@ TML errors are within a factor of 2.5 throughout; plausible geometry changes mov
 
 The penta-silahydrocarbon is predicted at TML 0.010% / CVCM 0.009% and the inverse-design target oil at 0.034% / 0.029%, so the lubricant target is also outgassing-safe. An illustrative two-component case shows a 0.5% volatile tail failing an otherwise passing oil, and a 24 h, 150 °C thin-film vacuum strip restoring a pass.
 
+## 5b. OrbitChem integration
+
+The simulator was ported to TypeScript and built into OrbitChem's web app as its standalone ASTM E595 outgassing screen (`platforms/orbitchem/`), a page OrbitChem had listed as coming next. It runs in the browser and reproduces the Python results. OrbitChem's backend radiation, thermal-cycling and contamination modules were not reachable for this work and were not run.
+
 ## 6. Limits
 
 Liquids only; cured polymers need diffusion coefficients per component. The exit-port size should be checked against the standard. Water is not modeled. Scan scores are judgment. Market sizes and program details are as published at the time of writing.

@@ -115,7 +115,7 @@ footer p{max-width:90ch}
   <header>
     <div class="eyebrow">Research portfolio · ChemeNova · October 2026</div>
     <h1>Fluids for heat and vacuum</h1>
-    <p class="lede">Two research modules I built for ChemeNova's IntelliForm and OrbitChem platforms. One designs PFAS-free immersion cooling fluids for AI data centers. The other maps where space chemistry has a real, open gap, then models it from the molecule up.</p>
+    <p class="lede">Two research modules, run on ChemeNova's IntelliForm and OrbitChem platforms. One designs PFAS-free immersion cooling fluids for AI data centers. The other maps where space chemistry has a real, open gap, then models it from the molecule up.</p>
     <div class="byline"><span>Shehan Makani, founder and CEO, ChemeNova</span><a href="https://github.com/shehanmakani">github.com/shehanmakani</a></div>
     <figure class="thesis" style="margin:0">
       <div class="chart" id="thesis" role="img" aria-label="Temperature axis from minus 60 to 140 degrees Celsius showing where each project operates"></div>
@@ -170,6 +170,16 @@ footer p{max-width:90ch}
         </tbody>
       </table></div>
       <p class="note">Benchmark: PAO 4 88% + PAO 2 12%. Model check: PAO 4's OCP figure of merit at 50 °C comes out at 45.4 against Evonik's published 46. Flash points are model values; prices are placeholders pending supplier quotes.</p>
+    </div>
+    <div class="panel">
+      <h3>Run on IntelliForm v1.6</h3>
+      <p>I added ThermalForm to IntelliForm as a new vertical, so the physics runs inside IntelliForm's NSGA-III Pareto engine and its TOPSIS selector. Without being told the earlier answer, IntelliForm found 35 Pareto blends. Its coolest fully biodegradable blend is renewable isoparaffin 62.9% + Priolube 1976 37.1%, which is Lead G to within a point.</p>
+      <ul class="clean">
+        <li>For the 210 °C flash class, TOPSIS picked PAO 4 55% + Priolube 1976 38% + renewable isoparaffin 8%: 0.76 °C cooler than PAO.</li>
+        <li>Several picks ride exactly on the Dk 2.3 limit, so the final choice needs a safety margin until ester GHz permittivity is measured.</li>
+        <li>IntelliForm's QSAR ranks esters above hydrocarbons but rates every hydrocarbon near 75, agreeing with data sheets on only 5 of 9 stocks. Base oils are outside its training data.</li>
+        <li>IntelliForm's digital twin puts a 1-tonne pilot batch at 2.6 hours and 0.031 kg CO₂ per kg, a simple blend ChemRich USA can make.</li>
+      </ul>
     </div>
   </section>
 
@@ -232,6 +242,11 @@ footer p{max-width:90ch}
       <span class="eyebrow">Design rule for a single low-volatility fluid · 125 °C · 24 h</span>
       <div class="f">P<sub>125 °C</sub> × √M &lt; 2.3×10⁻⁵ Pa·(kg/mol)<sup>½</sup> to pass CVCM ≤ 0.10%</div>
       <p>For a 900 g/mol oil that means vapor pressure under about 2.4×10⁻⁵ Pa at 125 °C. Pennzane sits about 9× above the line, matching its mixed test record; PFPE sits about 5× below. This turns a three-day qualification test into a target OrbitChem can design against.</p>
+    </div>
+
+    <div class="panel">
+      <h3>Built into OrbitChem</h3>
+      <p>OrbitChem's app listed a standalone ASTM E595 outgassing screen as coming next. I built it: the simulator is ported to TypeScript and runs in OrbitChem's /outgassing page with presets, a component editor, a per-component breakdown, the design rule and the NASA validation table. It reproduces the Python results and builds cleanly.</p>
     </div>
 
     <div class="block">

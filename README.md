@@ -9,6 +9,13 @@ Two research modules built by [Shehan Makani](https://github.com/shehanmakani) f
 | **ThermalForm** | Can a PFAS-free fluid meet the OCP immersion-cooling spec and beat the PAO benchmark? | Three lead blends pass at worst-case permittivity. Lead A runs a 1 kW chip 0.40 °C cooler and saves ~$3,100/MW·yr in pumping; Lead G is fully biodegradable and saves ~$5,500. |
 | **Space chemistry (OrbitChem)** | Where is the open gap in space chemistry, and can it be modeled from the molecule up? | 54% of 12,842 NASA outgassing tests fail. A metadata model predicts pass/fail on unseen products at AUC 0.81. A physics model of ASTM E595 predicts mass loss within 2.5× across a 100,000-fold volatility range with no fitting. |
 
+## Run on IntelliForm and OrbitChem
+
+- **IntelliForm v1.6:** a new ThermalForm vertical runs IntelliForm's NSGA-III + TOPSIS engine on the physics. Without being told the earlier answer, IntelliForm recovered the fully biodegradable Lead G (renewable isoparaffin 62.9% + Priolube 1976 37.1%). It also ran QSAR and the manufacturing digital twin on the leads.
+- **OrbitChem:** the E595 simulator now powers OrbitChem's standalone outgassing screen, which was on its roadmap as "coming next sprint."
+
+Details: [platforms/README.md](platforms/README.md)
+
 ## Reports
 
 - [ThermalForm technical report](reports/thermalform-technical-report.md)
@@ -23,6 +30,7 @@ space/lubricants/      vacuum operating-window model for space lubricant base oi
 space/outgassing/      NASA outgassing data, statistical model, ASTM E595 physics simulator
 reports/               technical reports
 docs/                  GitHub Pages site: showcase and the Fluid Selector tool
+platforms/             IntelliForm ThermalForm vertical and OrbitChem E595 module, with results
 ```
 
 ## Run
@@ -37,7 +45,7 @@ cd ../outgassing && python profile.py && python model.py && python e595sim.py
 
 ## What is not here
 
-The blend recipes were found with ThermalForm's multi-objective optimizer, which belongs to ChemeNova's IntelliForm platform and stays private. Everything needed to check the results is public: the data, the property and physics models, and the scripts that evaluate each recipe.
+The round 3 optimizer script stays private. The IntelliForm run in `platforms/` uses IntelliForm's public NSGA-III engine and independently reproduces the leads. Everything needed to check the results is public: the data, the property and physics models, and the scripts that evaluate each recipe.
 
 ## Caveats
 

@@ -1,6 +1,6 @@
 """Reproduce the round 3 lead-blend scorecard from the published recipes.
 
-The recipes came out of ThermalForm's optimizer, part of ChemeNova's IntelliForm platform and not in this repo.
+The recipes came out of the round 3 optimizer (private); platforms/intelliform reproduces them on IntelliForm's engine.
 This script evaluates them with the open property, heat-sink, loop, dielectric and OCP models.
 Run: python evaluate_leads.py
 """
