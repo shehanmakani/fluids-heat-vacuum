@@ -1,5 +1,7 @@
 # Space chemistry with OrbitChem: vacuum lubricants and outgassing
 
+*Vacuum-materials engine for OrbitChem*
+
 **Shehan Makani · ChemeNova LLC · October 2026**
 
 ## Abstract

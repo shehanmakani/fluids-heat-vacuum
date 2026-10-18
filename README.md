@@ -2,7 +2,7 @@
 
 **Live site:** https://shehanmakani.github.io/fluids-heat-vacuum/ · **OrbitChem by ChemeNova:** https://chemenova.com/orbitchem
 
-Two research builds on ChemeNova's IntelliForm and OrbitChem platforms, by [Shehan Makani](https://github.com/shehanmakani).
+Two research modules built by [Shehan Makani](https://github.com/shehanmakani) for ChemeNova's platforms: **ThermalForm**, an IntelliForm module for immersion cooling fluids, and a **vacuum-materials engine** for OrbitChem.
 
 | Project | Question | Headline result |
 | --- | --- | --- |
@@ -37,7 +37,7 @@ cd ../outgassing && python profile.py && python model.py && python e595sim.py
 
 ## What is not here
 
-The blend recipes were found with ChemeNova's IntelliForm optimizer, which stays private. Everything needed to check the results is public: the data, the property and physics models, and the scripts that evaluate each recipe.
+The blend recipes were found with ThermalForm's multi-objective optimizer, which belongs to ChemeNova's IntelliForm platform and stays private. Everything needed to check the results is public: the data, the property and physics models, and the scripts that evaluate each recipe.
 
 ## Caveats
 

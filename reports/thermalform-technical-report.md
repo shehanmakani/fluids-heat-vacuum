@@ -1,5 +1,7 @@
 # ThermalForm: designing PFAS-free single-phase immersion cooling fluids
 
+*An IntelliForm module*
+
 **Shehan Makani · ChemeNova LLC · October 2026**
 
 ## Abstract
